@@ -1,0 +1,3 @@
+module EqWoOrder
+  VERSION = '0.0.1'
+end
