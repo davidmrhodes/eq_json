@@ -1,6 +1,6 @@
 # EqWoOrder
 
-TODO: Write a gem description
+RSpec equality matcher that recursively sorts lists, hashes, and lists of hashes before comparing
 
 ## Installation
 
@@ -11,16 +11,25 @@ gem 'eq_wo_order'
 ```
 
 And then execute:
-
-    $ bundle
+ 
+```
+$ bundle
+```
 
 Or install it yourself as:
 
-    $ gem install eq_wo_order
+```
+$ gem install eq_wo_order
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+```
+first = [[1, 2, 3]]
+second = [[3, 1, 2]]
+
+expect(first).to eq_wo_order second
+```
 
 ## Contributing
 
