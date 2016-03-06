@@ -9,6 +9,16 @@ RSpec::Matchers.define :eq_wo_order do |expected|
       expected_sorted = sort_array_of_hashes_by_all_keys expected
 
       actual_sorted == expected_sorted
+    elsif actual.class == Hash
+      actual.keys.each do |key|
+        actual_element = actual[key]
+        expected_element = expected[key]
+
+        if actual_element.class == Array
+          actual[key] = sort_array_of_hashes_by_all_keys actual_element
+          expected[key] = sort_array_of_hashes_by_all_keys expected_element
+        end
+      end
     else
       actual == expected
     end

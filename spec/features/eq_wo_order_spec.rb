@@ -32,6 +32,37 @@ describe '#eq_wo_order' do
     describe ['a', {b: 'c', d: 'e'}] do
       it { is_expected.to eq_wo_order([{d: 'e', b: 'c'}, 'a']) }
     end
+
+    describe 'of hashes' do
+      describe [{a: 1}, {a: 2}] do
+        it { is_expected.to eq_wo_order([{a: 2}, {a: 1}]) }
+      end
+
+      describe [{a: 1, b: 1}, {a: 1, b: 2}] do
+        it { is_expected.to eq_wo_order([{a: 1, b: 2}, {a: 1, b: 1}]) }
+        it { is_expected.not_to eq_wo_order([{a: 1, b: 1}, {a: 1, b: 2, c: 3}]) }
+      end
+
+      describe [{a: 1, b: 1}, {a: 1, b: 2, c: 3}] do
+        it { is_expected.not_to eq_wo_order([{a: 1, b: 2}, {a: 1, b: 1}]) }
+      end
+    end
+
+    describe 'of arrays' do
+      describe [[1, 2]] do
+        it { is_expected.to eq_wo_order([[2, 1]]) }
+        it { is_expected.not_to eq_wo_order([[2, 1, 3]]) }
+      end
+
+      describe [[1, 2, 3]] do
+        it { is_expected.to eq_wo_order([[2, 1, 3]]) }
+        it { is_expected.not_to eq_wo_order([[2, 1]]) }
+      end
+
+      describe [[[1, 2]]] do
+        it { is_expected.to eq_wo_order([[[2, 1]]]) }
+      end
+    end
   end
 
   describe 'hashes' do
@@ -44,48 +75,17 @@ describe '#eq_wo_order' do
       it { is_expected.to eq_wo_order({a: 1, b: 2}) }
       it { is_expected.to eq_wo_order({b: 2, a: 1}) }
     end
-  end
 
-  describe 'arrays of hashes' do
-    describe [{a: 1}, {a: 2}] do
-      it { is_expected.to eq_wo_order([{a: 2}, {a: 1}]) }
+    describe 'of arrays' do
+      describe({a: [1, 2]}) do
+        it { is_expected.to eq_wo_order({a: [2, 1]}) }
+      end
     end
 
-    describe [{a: 1, b: 1}, {a: 1, b: 2}] do
-      it { is_expected.to eq_wo_order([{a: 1, b: 2}, {a: 1, b: 1}]) }
-      it { is_expected.not_to eq_wo_order([{a: 1, b: 1}, {a: 1, b: 2, c: 3}]) }
-    end
-
-    describe [{a: 1, b: 1}, {a: 1, b: 2, c: 3}] do
-      it { is_expected.not_to eq_wo_order([{a: 1, b: 2}, {a: 1, b: 1}]) }
-    end
-  end
-
-  describe 'arrays of arrays' do
-    describe [[1, 2]] do
-      it { is_expected.to eq_wo_order([[2, 1]]) }
-      it { is_expected.not_to eq_wo_order([[2, 1, 3]]) }
-    end
-
-    describe [[1, 2, 3]] do
-      it { is_expected.to eq_wo_order([[2, 1, 3]]) }
-      it { is_expected.not_to eq_wo_order([[2, 1]]) }
-    end
-
-    describe [[[1, 2]]] do
-      it { is_expected.to eq_wo_order([[[2, 1]]]) }
-    end
-  end
-
-  describe 'hashes of hashes' do
-    describe({a: {b: {c: 'd', e: 'f'}}}) do
-      it { is_expected.to eq_wo_order({a: {b: {e: 'f', c: 'd'}}}) }
-    end
-  end
-
-  xdescribe 'hashes of arrays' do
-    describe({a: [1, 2]}) do
-      it { is_expected.to eq_wo_order({a: [2, 1]}) }
+    describe 'of hashes' do
+      describe({a: {b: {c: 'd', e: 'f'}}}) do
+        it { is_expected.to eq_wo_order({a: {b: {e: 'f', c: 'd'}}}) }
+      end
     end
   end
 
