@@ -93,10 +93,11 @@ describe '#eq_wo_order' do
     end
   end
 
-  xdescribe 'hashes' do
+  describe 'hashes' do
     describe({a: 'b', c: 'd'}) do
       it { is_expected.to eq_wo_order({a: 'b', c: 'd'}) }
       it { is_expected.to eq_wo_order({c: 'd', a: 'b'}) }
+      it { is_expected.not_to eq_wo_order({a: 'b', c: 'd', e: 'f'}) }
     end
 
     describe({a: 1, b: 2}) do
