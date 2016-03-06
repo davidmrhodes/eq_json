@@ -56,7 +56,7 @@ describe '#eq_wo_order' do
         it { is_expected.not_to eq_wo_order([{a: 1, b: 2}, {a: 1, b: 1}]) }
       end
 
-      xdescribe 'of arrays' do
+      describe 'of arrays' do
         describe [{a: [1, 2]}, {a: [3]}] do
           it { is_expected.to eq_wo_order([{a: [2, 1]}, {a: [3]}]) }
         end
@@ -130,7 +130,7 @@ describe '#eq_wo_order' do
     end
   end
 
-  xdescribe 'deeply nested hashes and arrays' do
+  describe 'deeply nested hashes and arrays' do
     describe [{a: [{b: 'c', d: 'e'}]}, {f: 5}, {g: 'h'}] do
       it { is_expected.to eq_wo_order([{f: 5}, {a: [{d: 'e', b: 'c'}]}, {g: 'h'}]) }
     end
