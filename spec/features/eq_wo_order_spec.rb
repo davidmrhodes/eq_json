@@ -42,6 +42,8 @@ describe '#eq_wo_order' do
     describe 'of hashes' do
       describe [{a: 1}, {a: 2}] do
         it { is_expected.to eq_wo_order([{a: 2}, {a: 1}]) }
+        it { is_expected.not_to eq_wo_order([{a: 1}]) }
+        it { is_expected.not_to eq_wo_order([{a: 1}, {a: 2}, {a: 3}]) }
       end
 
       describe [{a: 1, b: 1}, {a: 1, b: 2}] do
@@ -76,7 +78,7 @@ describe '#eq_wo_order' do
         it { is_expected.to eq_wo_order([[4, 3], [2, 1]]) }
         it { is_expected.to eq_wo_order([[4, 3], [1, 2]]) }
         it { is_expected.not_to eq_wo_order([[1, 2]]) }
-        it { is_expected.not_to eq_wo_order([[3, 4]]) }
+        it { is_expected.not_to eq_wo_order([[1, 2], [3, 4], [5, 6]]) }
       end
 
       describe [[1, 2, 3]] do
