@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/jadekler/eq_wo_order.svg?branch=master)](https://travis-ci.org/jadekler/eq_wo_order)
 
-RSpec equality matcher that recursively sorts lists, hashes, and lists of hashes before comparing
+RSpec equality matcher that deeply compares array without order - arrays of primitives, hashes, and arrays
 
 ## Installation
 
