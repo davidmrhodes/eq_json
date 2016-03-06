@@ -1,3 +1,5 @@
 Version 0.0.1 eq_wo_order is released
 Version 0.1.0 Support for arrays of arrays and more complicated structures.
 Version 0.2.0 Support for arrays of hashes of arrays etc - more complicated nesting. Initial support for arrays of disparate types.
+Version 0.2.1 Small description update
+Version 0.2.2 Include CHANGELOG
