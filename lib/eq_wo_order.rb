@@ -31,8 +31,8 @@ RSpec::Matchers.define :eq_wo_order do |expected|
     end
   end
 
-  # given one array of arrays
-  # and another array of arrays
+  # given one array of arrays/hashes
+  # and another array of arrays/hashes
   # are all the items of the first found in the second?
   def all_items_in_source?(search, source)
     search.map { |search_item|
