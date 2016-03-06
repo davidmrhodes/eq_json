@@ -1,9 +1,9 @@
 Gem::Specification.new do |s|
   s.name        = 'eq_wo_order'
-  s.version     = '0.2.2'
+  s.version     = '0.2.3'
   s.date        = '2016-02-29'
   s.summary     = 'RSpec equality matcher that ignores nested order'
-  s.description = 'RSpec equality matcher that deeply compares array without order - arrays of primitives, hashes, and arrays'
+  s.description = 'RSpec equality matcher that deeply compares array without order - arrays of primitives, hashes, and arrays. Examples at github.com/jadekler/eq_wo_order'
   s.authors     = ['Jean de Klerk']
   s.email       = 'jadekler@gmail.com'
   s.homepage    = 'http://rubygems.org/gems/eq_wo_order'
