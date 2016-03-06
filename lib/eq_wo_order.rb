@@ -22,7 +22,7 @@ RSpec::Matchers.define :eq_wo_order do |expected|
       # primitives
       actual_primitive_items = actual.find_all { |x| x.class != Hash && x.class != Array }
       expected_primitive_items = expected.find_all { |x| x.class != Hash && x.class != Array }
-      primitive_items_match = actual_primitive_items.sort == expected_primitive_items.sort
+      primitive_items_match = sort_as_s(actual_primitive_items) == sort_as_s(expected_primitive_items)
 
       return primitive_items_match && array_items_match && hash_items_match
     elsif actual.class == Hash
@@ -45,5 +45,9 @@ RSpec::Matchers.define :eq_wo_order do |expected|
 
       found
     }.all?
+  end
+
+  def sort_as_s(arr)
+    arr.sort { |x, y| x.to_s <=> y.to_s }
   end
 end

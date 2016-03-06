@@ -33,9 +33,10 @@ describe '#eq_wo_order' do
       it { is_expected.to eq_wo_order([]) }
     end
 
-    xdescribe 'of disparate types' do
+    describe 'of disparate types' do
       describe ['a', {b: 'c', d: 'e'}] do
         it { is_expected.to eq_wo_order([{d: 'e', b: 'c'}, 'a']) }
+        it { is_expected.not_to eq_wo_order([5, {d: 'e', b: 'c'}, 'a']) }
       end
     end
 
