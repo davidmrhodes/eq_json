@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'eq_wo_order'
-  s.version     = '0.1.0'
+  s.version     = '0.2.0'
   s.date        = '2016-02-29'
   s.summary     = 'RSpec equality matcher that ignores nested order'
   s.description = 'RSpec equality matcher that recursively sorts lists, hashes, and lists of hashes before comparing'
