@@ -40,7 +40,13 @@ RSpec::Matchers.define :eq_wo_order do |expected|
 
     # hashes
     intersect_keys(hash_items).each do |key|
-      hash_items = hash_items.sort_by { |item| item[key] }
+      if hash_items.first[key].class == Array
+        hash_items.each_with_index do |hash_value_that_is_an_array, index|
+          hash_items[index][key] = sort_array_of_hashes_by_all_keys hash_value_that_is_an_array[key]
+        end
+      else
+        hash_items = hash_items.sort_by { |item| item[key] }
+      end
     end
     sorted_arr.push hash_items.flatten
 
