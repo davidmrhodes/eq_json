@@ -5,57 +5,41 @@ RSpec::Matchers.define :eq_wo_order do |expected|
 
   def eq_wo_order_base(actual, expected)
     if actual.class == Array
-      actual_sorted = sort_array_of_hashes_by_all_keys actual
-      expected_sorted = sort_array_of_hashes_by_all_keys expected
+      # arrays
+      actual_array_items = actual.find_all { |x| x.class == Array }
+      expected_array_items = expected.find_all { |x| x.class == Array }
+      array_items_match = all_items_in_source? actual_array_items, expected_array_items
 
-      actual_sorted == expected_sorted
+      # hashes
+      actual_hash_items = actual.find_all { |x| x.class == Hash }
+      expected_hash_items = expected.find_all { |x| x.class == Hash }
+      hash_items_match = all_items_in_source? actual_hash_items, expected_hash_items
+
+      # primitives
+      actual_primitive_items = actual.find_all { |x| x.class != Hash && x.class != Array }
+      expected_primitive_items = expected.find_all { |x| x.class != Hash && x.class != Array }
+      primitive_items_match = actual_primitive_items.sort == expected_primitive_items.sort
+
+      return primitive_items_match && array_items_match && hash_items_match
     elsif actual.class == Hash
-      actual.keys.each do |key|
-        actual_element = actual[key]
-        expected_element = expected[key]
-
-        if actual_element.class == Array
-          actual[key] = sort_array_of_hashes_by_all_keys actual_element
-          expected[key] = sort_array_of_hashes_by_all_keys expected_element
-        end
-      end
+      return actual == expected
     else
-      actual == expected
+      return actual == expected
     end
   end
 
-  def sort_array_of_hashes_by_all_keys(arr)
-    sorted_arr = []
+  # given one array of arrays
+  # and another array of arrays
+  # are all the items of the first found in the second?
+  def all_items_in_source?(search, source)
+    search.map { |search_item|
+      found = false
 
-    hash_items = arr.collect { |x| x if x.class == Hash }.compact
-    array_items = arr.collect { |x| x if x.class == Array }.compact
-    primitive_items = arr.collect { |x| x unless x.class == Hash || x.class == Array }.compact
-
-    # primitives
-    sorted_arr.push primitive_items.sort.flatten
-
-    # arrays
-    sorted_array_items = array_items.collect { |item| sort_array_of_hashes_by_all_keys(item) }
-    sorted_arr.push sorted_array_items.flatten
-
-    # hashes
-    intersect_keys(hash_items).each do |key|
-      if hash_items.first[key].class == Array
-        hash_items.each_with_index do |hash_value_that_is_an_array, index|
-          hash_items[index][key] = sort_array_of_hashes_by_all_keys hash_value_that_is_an_array[key]
-        end
-      else
-        hash_items = hash_items.sort_by { |item| item[key] }
+      source.each do |source_item|
+        found = true if eq_wo_order_base search_item, source_item
       end
-    end
-    sorted_arr.push hash_items.flatten
 
-    sorted_arr
-  end
-
-  def intersect_keys(arr_of_hashes)
-    keys = arr_of_hashes.collect { |x| x.keys }
-    intersected_keys = keys.reduce(keys.first, :&)
-    intersected_keys == nil ? [] : intersected_keys
+      found
+    }.all?
   end
 end
