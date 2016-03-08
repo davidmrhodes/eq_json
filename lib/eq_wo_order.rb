@@ -5,14 +5,14 @@ RSpec::Matchers.define :eq_wo_order do |expected|
 
   def eq_wo_order_base(actual, expected)
     case actual
-    when Array
-      primitive_items_match?(actual, expected) &&
-        array_items_match?(actual, expected) &&
-        hash_items_match?(actual, expected)
-    when Hash
-      all_items_in_source?(actual, expected) && all_items_in_source?(expected, actual)
-    else
-      actual == expected
+      when Array
+        primitive_items_match?(actual, expected) &&
+          array_items_match?(actual, expected) &&
+          hash_items_match?(actual, expected)
+      when Hash
+        all_items_in_source?(actual, expected) && all_items_in_source?(expected, actual)
+      else
+        actual == expected
     end
   end
 
@@ -35,7 +35,6 @@ RSpec::Matchers.define :eq_wo_order do |expected|
     all_items_in_source?(actual_array_items, expected_array_items) &&
       all_items_in_source?(expected_array_items, actual_array_items)
   end
-
 
   def primitives(list)
     list.find_all { |x| x.class != Hash && x.class != Array }
