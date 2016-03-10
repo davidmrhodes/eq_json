@@ -4,6 +4,8 @@ RSpec::Matchers.define :eq_wo_order do |expected|
   end
 
   def eq_wo_order_base(actual, expected)
+    return false unless actual.class == expected.class
+
     case actual
       when Array
         primitive_items_match?(actual, expected) &&

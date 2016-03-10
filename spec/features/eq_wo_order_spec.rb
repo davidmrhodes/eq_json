@@ -22,6 +22,7 @@ describe '#eq_wo_order' do
     describe ['a', 'b'] do
       it { is_expected.to eq_wo_order(['a', 'b']) }
       it { is_expected.to eq_wo_order(['b', 'a']) }
+      it { is_expected.not_to eq_wo_order(nil) }
     end
 
     describe [1, 2] do
@@ -98,6 +99,7 @@ describe '#eq_wo_order' do
       it { is_expected.to eq_wo_order({a: 'b', c: 'd'}) }
       it { is_expected.to eq_wo_order({c: 'd', a: 'b'}) }
       it { is_expected.not_to eq_wo_order({a: 'b', c: 'd', e: 'f'}) }
+      it { is_expected.not_to eq_wo_order(nil) }
     end
 
     describe({a: 1, b: 2}) do
