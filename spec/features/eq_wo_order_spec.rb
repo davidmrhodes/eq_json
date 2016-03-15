@@ -1,4 +1,4 @@
-require_relative '../../lib/eq_wo_order'
+require 'eq_wo_order'
 
 describe '#eq_wo_order' do
   describe 'basic types' do
