@@ -7,12 +7,12 @@ RSpec::Matchers.define :eq_wo_order do |expected|
     return false unless actual.class == expected.class
 
     case actual
-    when Array
-      arrays_match?(actual, expected)
-    when Hash
-      hashes_match?(actual, expected)
-    else
-      actual == expected
+      when Array
+        arrays_match?(actual, expected)
+      when Hash
+        hashes_match?(actual, expected)
+      else
+        actual == expected
     end
   end
 
