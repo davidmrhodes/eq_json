@@ -1,4 +1,6 @@
 RSpec::Matchers.define :eq_wo_order do |expected|
+  diffable
+
   match do |actual|
     eq_wo_order(actual, expected)
   end

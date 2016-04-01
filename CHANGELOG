@@ -7,3 +7,4 @@ Version 0.2.3 Update description with github link
 Version 0.2.4 Ruby-ism refactors for terseness
 Version 0.3.0 Support for nil-case
 Version 0.3.1 Refactor large amounts of code to use Enumerable::any/all, thanks to @jacobsimeon
+Version 0.4.0 Added diffable macro for better output (shows diff of expectation and actual)
