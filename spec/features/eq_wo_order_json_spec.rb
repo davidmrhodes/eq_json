@@ -1,8 +1,5 @@
 require 'eq_wo_order_json'
-require 'eq_wo_order'
 require 'json'
-require 'DaveTestSpec'
-require 'foo'
 
 
 
@@ -190,47 +187,3 @@ describe 'test single level json objects' do
   def wrapWithResetColor(text)
     "\e[0m#{text}\e[0m"
   end
-
-
-  # actual = {
-  #   book:
-  #     {
-  #       name: 'Harry Potter and the Sorcerer\'s Stone',
-  #       author: 'J.K. Rowling'
-  #     }
-  # }
-  #
-  # expected = {
-  #     book:
-  #       {
-  #         name: 'Harry Potter and the Sorcerer\'s Stone',
-  #         author: 'J.K. Rowling'
-  #       }
-  # }
-
-    # describe 'test simple json mismatch' do
-    #   temp=[{a: {b: 'test1', d: 'test2'}}]
-    #
-    #   tempJson = temp.to_json
-    #   puts 'tempJson'
-    #   pp tempJson
-    #   puts JSON.parse(tempJson)
-    #   jj JSON.parse(tempJson)
-    #
-    #
-    #   it {
-    #     # actual=[{a: {b: 'test1', d: 'test2'}}]
-    #     actual=[{a: {b: 'test1'}}]
-    #     expected=[{a: {b: 'test1', d: 'test2'}}]
-    #
-    #     # Foo.new
-    #     # dave=DaveTestSpec.new("expected1")
-    #     # test_dmr=dave.matches?("actual1")
-    #
-    #     # matcher_template = RSpec::Matchers::DSL::Matcher.new("eq_wo_order_json", &declarations)
-    #
-    #     expect(expected).to eq_wo_order_json(actual)
-    #
-    #     # is_expected.to eq_wo_order_json([{f: 5}, {a: [{d: 'e', b: 'c'}]}, {g: 'h'}])
-    #   }
-    # end
