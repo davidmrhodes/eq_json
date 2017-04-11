@@ -18,7 +18,12 @@ class EqualWithOutOrderJson
       return false;
     end
 
-    expected == @actual
+    unless expected == @actual
+      @failureMessage = generateNotEqualMessage();
+      return false;
+    end
+
+    return true;
   end
 
   def failure_message
@@ -57,8 +62,9 @@ class EqualWithOutOrderJson
     actualType = getJsonType(@actual)
     expectedType = getJsonType(@expected)
 
-     return "JSON path [ expected #{expectedType} type but actual is #{actualType}\n" +
-            getExpectedActualJson()
+     return getExpectedActualJson() +"\n" +
+            "Diff:\n" +
+            "JSON path $. expected #{expectedType} type but actual is #{actualType}\n"
    end
 
 
@@ -97,13 +103,53 @@ class EqualWithOutOrderJson
            @difference
   end
 
+  def generateNotEqualMessage()
+
+    objectsNotInExpected = getObjectsNotIn(@actual, @expected);
+
+    objectsNotInActual = getObjectsNotIn(@expected, @actual);
+
+    jsonErrorInfo = "JSON path $.\n"
+
+    unless objectsNotInExpected.empty?
+      jsonErrorInfo << "expected does not contain #{objectsNotInExpected.to_json}\n"
+    end
+
+    unless objectsNotInActual.empty?
+      jsonErrorInfo << makeGreen("actual does not contain #{objectsNotInActual.to_json}")
+    end
+
+    differ = RSpec::Support::Differ.new
+
+    differ = RSpec::Support::Differ.new(
+          :object_preparer => lambda { |expected| RSpec::Matchers::Composable.surface_descriptions_in(expected) },
+          :color => RSpec::Matchers.configuration.color?
+    )
+
+    @difference = differ.diff(@expected, @actual)
+
+    return getExpectedActualJson() + "\n" +
+           "\nDiff:\n" +
+           jsonErrorInfo +
+           @difference
+  end
+
   def getExpectedActualJson
     expectedJson=@expected.to_json;
     actualJson=@actual.to_json;
 
     return "Expected: #{expectedJson}\n" +
            makeGreen("Actual: #{actualJson}")
-          #  puts "\e[32mHello\e[0m"
+  end
+
+  def getObjectsNotIn(hash1, hash2)
+    missing = {}
+    hash1.each do |hash1_key, hash1_value|
+      unless hash2.has_key?(hash1_key)
+        missing[hash1_key] = hash1_value
+      end
+    end
+    return missing
   end
 
 

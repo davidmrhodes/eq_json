@@ -24,20 +24,15 @@ describe 'test objects not same type' do
     expect(customMatcher.matches?(expected)).to eq(false)
 
     String expectedErrorMessage= "Expected: #{expectedJson}\n" +
-                                 makeGreen("Actual: #{actualJson}") + "\n"
-                                 "Diff:\n"
-                                 "JSON path [ expected array type but actual is object\n" +
-                                 "@@ -1,4 +1,2 @@\n"
-                                 "-:author => \"J.K. Rowling\","
-                                 "-:isbn => 439708184,"
-                                 ":name => \"Harry Potter and the Sorcerer's Stone\","
+                                 makeGreen("Actual: #{actualJson}") + "\n" +
+                                 "Diff:\n" +
+                                 "JSON path $. expected array type but actual is object\n"
 
-    # expect(customMatcher.failure_message).to eq(expectedErrorMessage)
+    expect(customMatcher.failure_message).to eq(expectedErrorMessage)
 
     expect(expected).not_to eq_wo_order_json(actual)
   end
 
-  # TODO test with nested object and array missmatch
 end
 
 describe 'test single level json objects' do
@@ -165,6 +160,40 @@ describe 'test single level json objects' do
       expect(expected).not_to eq_wo_order_json(actual)
     end
 
+    it 'expected and actual different' do
+
+      actual = {
+        name: 'Harry Potter and the Sorcerer\'s Stone',
+        author: 'J.K. Rowling'
+      }
+
+      expected = {
+        name: 'Harry Potter and the Sorcerer\'s Stone',
+        publisher: 'ACME Publisher Inc.'
+      }
+
+      customMatcher=EqualWithOutOrderJson.new(actual)
+
+      expect(customMatcher.matches?(expected)).to eq(false)
+
+      expectedJson=expected.to_json;
+      actualJson=actual.to_json;
+
+      String expectedErrorMessage= "Expected: #{expectedJson}\n" +
+                                    makeGreen("Actual: #{actualJson}") + "\n" +
+                                    "\nDiff:\n" +
+                                    "JSON path $.\n" +
+                                    "expected does not contain {\"author\":\"J.K. Rowling\"}\n" +
+                                    makeGreen("actual does not contain {\"publisher\":\"ACME Publisher Inc.\"}") + wrapWithResetColor("\n") +
+                                    wrapWithResetColor("\n") + makeBlue("@@ -1,3 +1,3 @@\n") +
+                                    makeRed("-:author => \"J.K. Rowling\",\n") +
+                                    wrapWithResetColor(" :name => \"Harry Potter and the Sorcerer's Stone\",\n") +
+                                    makeGreen("+:publisher => \"ACME Publisher Inc.\",\n")
+
+      expect(customMatcher.failure_message).to eq(expectedErrorMessage)
+
+      expect(expected).not_to eq_wo_order_json(actual)
+    end
   end
 
   def makeGreen(text)
