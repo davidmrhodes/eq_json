@@ -1,5 +1,6 @@
 require 'eq_wo_order_json'
 require 'json'
+require 'spec_helper'
 
 
 
@@ -194,25 +195,4 @@ describe 'test single level json objects' do
 
       expect(expected).not_to eq_wo_order_json(actual)
     end
-  end
-
-  def makeGreen(text)
-    return colorize(text, 32);
-    # return "\e[32m#{text}\e[0m"
-  end
-
-  def makeRed(text)
-    colorize(text, 31)
-  end
-
-  def makeBlue(text)
-    colorize(text, 34)
-  end
-
-  def colorize(text, color_code)
-      "\e[#{color_code}m#{text}\e[0m"
-  end
-
-  def wrapWithResetColor(text)
-    "\e[0m#{text}\e[0m"
   end

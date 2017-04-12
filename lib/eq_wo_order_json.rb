@@ -1,29 +1,19 @@
 require 'pp'
 
 class EqualWithOutOrderJson
+
   def initialize(actual)
     @actual = actual
+    @jsonPathRoot = "$."
+    @jsonPath = @jsonPathRoot
   end
 
   def matches?(expected)
+
     @expected = expected
 
-    unless @actual.class == expected.class
-      @failureMessage = generateTypeMissMatchFailureMessage()
-      return false;
-    end
+    matchesObject?(@expected, @actual)
 
-    unless @actual.length == @expected.length
-      @failureMessage = generateLengthFailureMessage();
-      return false;
-    end
-
-    unless expected == @actual
-      @failureMessage = generateNotEqualMessage();
-      return false;
-    end
-
-    return true;
   end
 
   def failure_message
@@ -47,6 +37,84 @@ class EqualWithOutOrderJson
 
   private
 
+  def matchesObject?(expectedObj, actualObj)
+
+    @currentActualObj = actualObj
+    @currentExpectedObj = expectedObj
+
+    case actualObj
+      when Array
+        return arrays_match?(expectedObj, actualObj)
+      when Hash
+        return hashes_match?(expectedObj, actualObj)
+      else
+        unless expectedObj == actualObj
+          @failureMessage = generateNotEqualMessage();
+          return false;
+        end
+    end
+
+    return true;
+
+  end
+
+  def arrays_match?(expectedObj, actualArray)
+
+    unless actualArray.class == expectedObj.class
+      @failureMessage = generateTypeMissMatchFailureMessage()
+      return false;
+    end
+
+    unless actualArray.length == expectedObj.length
+      @failureMessage = generateLengthFailureMessage();
+      return false;
+    end
+
+    expectedObj.all? do |expected_item|
+      actualArray.any? do |candidate|
+        matchesObject?(expected_item, candidate)
+      end
+    end
+
+  end
+
+  def hashes_match?(expectedObj, actualHash)
+
+    unless actualHash.class == expectedObj.class
+      @failureMessage = generateTypeMissMatchFailureMessage()
+      return false;
+    end
+
+    unless actualHash.length == expectedObj.length
+      @failureMessage = generateLengthFailureMessage();
+      return false;
+    end
+
+    expectedObj.each do |expected_key, expected_value|
+      @currentJsonKey = expected_key
+      @jsonPath = addKeyToPath(expected_key)
+      match = matchesObject?(expected_value, actualHash[expected_key])
+      @jsonPath = removeKeyFromPath(expected_key)
+      if match == false
+        return false;
+      end
+    end
+
+      return true
+
+  end
+
+  def addKeyToPath(jsonKey)
+    if @jsonPath[@jsonPath.length-1] != "."
+      @jsonPath << "."
+    end
+    @jsonPath << "#{jsonKey}"
+  end
+
+  def removeKeyFromPath(jsonKey)
+    @jsonPath = @jsonPath[0, @jsonPath.length - "#{jsonKey}".length]
+  end
+
   def getJsonType(rubyJsonObject)
     case rubyJsonObject
       when Array
@@ -59,13 +127,26 @@ class EqualWithOutOrderJson
   end
 
   def generateTypeMissMatchFailureMessage()
-    actualType = getJsonType(@actual)
-    expectedType = getJsonType(@expected)
 
-     return getExpectedActualJson() +"\n" +
+    if @currentJsonKey.nil?
+      actualType = getJsonType(@actual)
+      expectedType = getJsonType(@expected)
+    else
+      actualType = getJsonType(@currentActualObj)
+      expectedType = getJsonType(@currentExpectedObj)
+      currentJsonDiff = "\tExpected: #{@currentExpectedObj.to_json}\n" +
+                        makeGreen("\tActual: #{@currentActualObj.to_json}") + "\n"
+    end
+
+    jsonErrorInfo = "JSON path #{@jsonPath} expected #{expectedType} type but actual is #{actualType}\n"
+    unless currentJsonDiff.nil?
+      jsonErrorInfo << currentJsonDiff
+    end
+
+    return getExpectedActualJson() +"\n" +
             "Diff:\n" +
-            "JSON path $. expected #{expectedType} type but actual is #{actualType}\n"
-   end
+            "#{jsonErrorInfo}"
+  end
 
 
   def generateLengthFailureMessage()
