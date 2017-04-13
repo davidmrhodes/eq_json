@@ -1,13 +1,18 @@
 require 'pp'
 require 'colorizer'
+require 'message_generator'
 
 class EqualWithOutOrderJson
+
+  attr_accessor :actual, :expected, :jsonPath, :jsonPathRoot, :currentActualObj,
+                :currentExpectedObj, :currentJsonKey
 
   def initialize(actual)
     @actual = actual
     @jsonPathRoot = "$."
     @jsonPath = @jsonPathRoot
-    @colorizer = EqJsonColorizer.new()
+    @colorizer = EqJsonColorizer.new
+    @messageGenerator = EqJsonMessageGenerator.new(self)
   end
 
   def matches?(expected)
@@ -51,7 +56,7 @@ class EqualWithOutOrderJson
         return hashes_match?(expectedObj, actualObj)
       else
         unless expectedObj == actualObj
-          @failureMessage = generateNotEqualMessage();
+          @failureMessage = @messageGenerator.generateNotEqualMessage();
           return false;
         end
     end
@@ -63,12 +68,12 @@ class EqualWithOutOrderJson
   def arrays_match?(expectedObj, actualArray)
 
     unless actualArray.class == expectedObj.class
-      @failureMessage = generateTypeMissMatchFailureMessage()
+      @failureMessage = @messageGenerator.generateTypeMissMatchFailureMessage()
       return false;
     end
 
     unless actualArray.length == expectedObj.length
-      @failureMessage = generateLengthFailureMessage();
+      @failureMessage = @messageGenerator.generateLengthFailureMessage();
       return false;
     end
 
@@ -83,12 +88,12 @@ class EqualWithOutOrderJson
   def hashes_match?(expectedObj, actualHash)
 
     unless actualHash.class == expectedObj.class
-      @failureMessage = generateTypeMissMatchFailureMessage()
+      @failureMessage = @messageGenerator.generateTypeMissMatchFailureMessage()
       return false;
     end
 
     unless actualHash.length == expectedObj.length
-      @failureMessage = generateLengthFailureMessage();
+      @failureMessage = @messageGenerator.generateLengthFailureMessage();
       return false;
     end
 
@@ -117,123 +122,8 @@ class EqualWithOutOrderJson
     @jsonPath = @jsonPath[0, @jsonPath.length - "#{jsonKey}".length]
   end
 
-  def getJsonType(rubyJsonObject)
-    case rubyJsonObject
-      when Array
-        return "array"
-      when Hash
-        return "object"
-      else
-        return "not json"
-    end
-  end
-
-  def generateTypeMissMatchFailureMessage()
-
-    if @currentJsonKey.nil?
-      actualType = getJsonType(@actual)
-      expectedType = getJsonType(@expected)
-    else
-      actualType = getJsonType(@currentActualObj)
-      expectedType = getJsonType(@currentExpectedObj)
-      currentJsonDiff = "\tExpected: #{@currentExpectedObj.to_json}\n" +
-                        @colorizer.green("\tActual: #{@currentActualObj.to_json}") + "\n"
-    end
-
-    jsonErrorInfo = "JSON path #{@jsonPath} expected #{expectedType} type but actual is #{actualType}\n"
-    unless currentJsonDiff.nil?
-      jsonErrorInfo << currentJsonDiff
-    end
-
-    return getExpectedActualJson() +"\n" +
-            "Diff:\n" +
-            "#{jsonErrorInfo}"
-  end
 
 
-  def generateLengthFailureMessage()
-
-    if @actual.length > @expected.length
-      smallerIs = "expected"
-      larger = @actual
-      smaller = @expected
-    else
-      smallerIs = "actual"
-      larger = @expected
-      smaller = @actual
-    end
-
-    difference = larger.keys - smaller.keys
-    merged = larger.merge(smaller)
-
-    diff = {}
-    difference.each {|k| diff[k] = merged[k] }
-
-    diffJson = diff.to_json
-
-    differ = RSpec::Support::Differ.new
-
-    differ = RSpec::Support::Differ.new(
-          :object_preparer => lambda { |expected| RSpec::Matchers::Composable.surface_descriptions_in(expected) },
-          :color => RSpec::Matchers.configuration.color?
-      )
-
-    @difference = differ.diff(@expected, @actual)
-
-    return getExpectedActualJson() + "\n" +
-           "Diff:\n" +
-           "JSON path { #{smallerIs} does not contain #{diffJson}\n" +
-           @difference
-  end
-
-  def generateNotEqualMessage()
-
-    objectsNotInExpected = getObjectsNotIn(@actual, @expected);
-
-    objectsNotInActual = getObjectsNotIn(@expected, @actual);
-
-    jsonErrorInfo = "JSON path $.\n"
-
-    unless objectsNotInExpected.empty?
-      jsonErrorInfo << "expected does not contain #{objectsNotInExpected.to_json}\n"
-    end
-
-    unless objectsNotInActual.empty?
-      jsonErrorInfo << @colorizer.green("actual does not contain #{objectsNotInActual.to_json}")
-    end
-
-    differ = RSpec::Support::Differ.new
-
-    differ = RSpec::Support::Differ.new(
-          :object_preparer => lambda { |expected| RSpec::Matchers::Composable.surface_descriptions_in(expected) },
-          :color => RSpec::Matchers.configuration.color?
-    )
-
-    @difference = differ.diff(@expected, @actual)
-
-    return getExpectedActualJson() + "\n" +
-           "\nDiff:\n" +
-           jsonErrorInfo +
-           @difference
-  end
-
-  def getExpectedActualJson
-    expectedJson=@expected.to_json;
-    actualJson=@actual.to_json;
-
-    return "Expected: #{expectedJson}\n" +
-           @colorizer.green("Actual: #{actualJson}")
-  end
-
-  def getObjectsNotIn(hash1, hash2)
-    missing = {}
-    hash1.each do |hash1_key, hash1_value|
-      unless hash2.has_key?(hash1_key)
-        missing[hash1_key] = hash1_value
-      end
-    end
-    return missing
-  end
 
 
 end
