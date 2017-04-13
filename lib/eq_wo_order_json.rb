@@ -1,4 +1,5 @@
 require 'pp'
+require 'colorizer'
 
 class EqualWithOutOrderJson
 
@@ -6,6 +7,7 @@ class EqualWithOutOrderJson
     @actual = actual
     @jsonPathRoot = "$."
     @jsonPath = @jsonPathRoot
+    @colorizer = EqJsonColorizer.new()
   end
 
   def matches?(expected)
@@ -135,7 +137,7 @@ class EqualWithOutOrderJson
       actualType = getJsonType(@currentActualObj)
       expectedType = getJsonType(@currentExpectedObj)
       currentJsonDiff = "\tExpected: #{@currentExpectedObj.to_json}\n" +
-                        makeGreen("\tActual: #{@currentActualObj.to_json}") + "\n"
+                        @colorizer.green("\tActual: #{@currentActualObj.to_json}") + "\n"
     end
 
     jsonErrorInfo = "JSON path #{@jsonPath} expected #{expectedType} type but actual is #{actualType}\n"
@@ -197,7 +199,7 @@ class EqualWithOutOrderJson
     end
 
     unless objectsNotInActual.empty?
-      jsonErrorInfo << makeGreen("actual does not contain #{objectsNotInActual.to_json}")
+      jsonErrorInfo << @colorizer.green("actual does not contain #{objectsNotInActual.to_json}")
     end
 
     differ = RSpec::Support::Differ.new
@@ -220,7 +222,7 @@ class EqualWithOutOrderJson
     actualJson=@actual.to_json;
 
     return "Expected: #{expectedJson}\n" +
-           makeGreen("Actual: #{actualJson}")
+           @colorizer.green("Actual: #{actualJson}")
   end
 
   def getObjectsNotIn(hash1, hash2)
@@ -234,22 +236,6 @@ class EqualWithOutOrderJson
   end
 
 
-  def makeGreen(text)
-    return colorize(text, 32);
-    # return "\e[32m#{text}\e[0m"
-  end
-
-  def makeRed(text)
-    colorize(text, 31)
-  end
-
-  def makeBlue(text)
-    colorize(text, 34)
-  end
-
-  def colorize(text, color_code)
-      "\e[#{color_code}m#{text}\e[0m"
-  end
 end
 
 def eq_wo_order_json(*args)
