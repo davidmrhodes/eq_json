@@ -65,7 +65,29 @@ class EqJsonMessageGenerator
            @difference
   end
 
-  def generateNotEqualMessage()
+  def generateDifferentValueMessage()
+
+    # TODO have item in todo list to use a diff if the value is a String
+    #      with mutiple lines so leaving this diff code even though it is not
+    #      being used
+    differ = RSpec::Support::Differ.new
+
+    differ = RSpec::Support::Differ.new(
+          :object_preparer => lambda { |expected| RSpec::Matchers::Composable.surface_descriptions_in(expected) },
+          :color => RSpec::Matchers.configuration.color?
+      )
+
+    @difference = differ.diff_as_object(@matcher.currentExpectedObj, @matcher.currentActualObj)
+    # End unused code
+
+    return getExpectedActualJson() + "\n" +
+           "Diff:\n" +
+           "JSON path #{@matcher.jsonPath}\n" +
+           "\texpected: \"#{@matcher.currentExpectedObj}\"\n" +
+           @colorizer.green("\t     got: \"#{@matcher.currentActualObj}\"")
+  end
+
+  def generateDifferentKeyMessage()
 
     objectsNotInExpected = getObjectsNotIn(@matcher.actual, @matcher.expected);
 
@@ -113,7 +135,7 @@ class EqJsonMessageGenerator
     end
     return missing
   end
-  
+
   def getJsonType(rubyJsonObject)
     case rubyJsonObject
       when Array

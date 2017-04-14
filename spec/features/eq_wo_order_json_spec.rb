@@ -2,8 +2,6 @@ require 'eq_wo_order_json'
 require 'json'
 require 'spec_helper'
 
-
-
 describe 'test objects not same type' do
   it 'expected JSON array actual JSON object' do
     actual = {
@@ -161,7 +159,7 @@ describe 'test single level json objects' do
       expect(expected).not_to eq_wo_order_json(actual)
     end
 
-    it 'expected and actual different' do
+    it 'expected and actual both have missing objects' do
 
       actual = {
         name: 'Harry Potter and the Sorcerer\'s Stone',
@@ -172,6 +170,7 @@ describe 'test single level json objects' do
         name: 'Harry Potter and the Sorcerer\'s Stone',
         publisher: 'ACME Publisher Inc.'
       }
+
 
       customMatcher=EqualWithOutOrderJson.new(actual)
 
@@ -190,6 +189,37 @@ describe 'test single level json objects' do
                                     makeRed("-:author => \"J.K. Rowling\",\n") +
                                     wrapWithResetColor(" :name => \"Harry Potter and the Sorcerer's Stone\",\n") +
                                     makeGreen("+:publisher => \"ACME Publisher Inc.\",\n")
+
+      expect(customMatcher.failure_message).to eq(expectedErrorMessage)
+
+      expect(expected).not_to eq_wo_order_json(actual)
+    end
+
+    it 'expected and actual have different values for key' do
+
+      actual = {
+        name: 'Harry Potter and the Chamber of Secrets',
+        author: 'J.K. Rowling'
+      }
+
+      expected = {
+        name: 'Harry Potter and the Sorcerer\'s Stone',
+        author: 'J.K. Rowling'
+      }
+
+      customMatcher=EqualWithOutOrderJson.new(actual)
+
+      expect(customMatcher.matches?(expected)).to eq(false)
+
+      expectedJson=expected.to_json;
+      actualJson=actual.to_json;
+
+      String expectedErrorMessage= "Expected: #{expectedJson}\n" +
+                                    makeGreen("Actual: #{actualJson}") + "\n" +
+                                    "Diff:\n" +
+                                    "JSON path $.name\n" +
+                                    "\texpected: \"Harry Potter and the Sorcerer\'s Stone\"\n" +
+                                    makeGreen("\t     got: \"Harry Potter and the Chamber of Secrets\"")
 
       expect(customMatcher.failure_message).to eq(expectedErrorMessage)
 

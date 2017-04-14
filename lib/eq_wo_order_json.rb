@@ -56,7 +56,7 @@ class EqualWithOutOrderJson
         return hashes_match?(expectedObj, actualObj)
       else
         unless expectedObj == actualObj
-          @failureMessage = @messageGenerator.generateNotEqualMessage();
+          @failureMessage = @messageGenerator.generateDifferentValueMessage();
           return false;
         end
     end
@@ -100,6 +100,11 @@ class EqualWithOutOrderJson
     expectedObj.each do |expected_key, expected_value|
       @currentJsonKey = expected_key
       @jsonPath = addKeyToPath(expected_key)
+      actualValue = actualHash[expected_key]
+      if actualValue.nil?
+        @failureMessage = @messageGenerator.generateDifferentKeyMessage()
+        return false
+      end
       match = matchesObject?(expected_value, actualHash[expected_key])
       @jsonPath = removeKeyFromPath(expected_key)
       if match == false
@@ -121,10 +126,6 @@ class EqualWithOutOrderJson
   def removeKeyFromPath(jsonKey)
     @jsonPath = @jsonPath[0, @jsonPath.length - "#{jsonKey}".length]
   end
-
-
-
-
 
 end
 
