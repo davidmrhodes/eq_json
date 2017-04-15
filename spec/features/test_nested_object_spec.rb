@@ -60,3 +60,54 @@ describe 'test nested objects not same type' do
     expect(expected).not_to eq_wo_order_json(actual)
   end
 end
+
+describe 'test nested level json objects' do
+  it 'actual missing object' do
+
+    actual = {
+      name: 'Harry Potter and the Sorcerer\'s Stone',
+      author: 'J.K. Rowling',
+      publisherInfo: {
+        name: "ACME Publisher Inc.",
+        publishDate: {
+          month: 3,
+          year: 2015
+        }
+      }
+    }
+
+    expected = {
+      name: 'Harry Potter and the Sorcerer\'s Stone',
+      author: 'J.K. Rowling',
+      publisherInfo: {
+        name: "ACME Publisher Inc.",
+        publishDate: {
+          month: 3,
+          day: 23,
+          year: 2015
+        }
+      }
+    }
+
+    customMatcher=EqualWithOutOrderJson.new(actual)
+
+    expect(customMatcher.matches?(expected)).to eq(false)
+
+    expectedJson=expected.to_json;
+    actualJson=actual.to_json;
+
+    String expectedErrorMessage= "Expected: #{expectedJson}\n" +
+                                  makeGreen("Actual: #{actualJson}") + "\n" +
+                                  "\nDiff:\n" +
+                                  "JSON path $.publisherInfo.publishDate\n" +
+                                  makeGreen("actual does not contain {\"day\":23}\n") +
+                                  wrapWithResetColor("\n") + makeBlue("@@ -1,3 +1,4 @@\n") +
+                                  makeGreen("+:day => 23,\n") +
+                                  wrapWithResetColor(" :month => 3,\n") +
+                                  wrapWithResetColor(" :year => 2015,\n")
+
+    expect(customMatcher.failure_message).to eq(expectedErrorMessage)
+
+    expect(expected).not_to eq_wo_order_json(actual)
+  end
+end

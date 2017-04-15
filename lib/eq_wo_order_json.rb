@@ -1,5 +1,4 @@
 require 'pp'
-require 'colorizer'
 require 'message_generator'
 
 class EqualWithOutOrderJson
@@ -11,7 +10,6 @@ class EqualWithOutOrderJson
     @actual = actual
     @jsonPathRoot = "$."
     @jsonPath = @jsonPathRoot
-    @colorizer = EqJsonColorizer.new
     @messageGenerator = EqJsonMessageGenerator.new(self)
   end
 
@@ -73,7 +71,7 @@ class EqualWithOutOrderJson
     end
 
     unless actualArray.length == expectedObj.length
-      @failureMessage = @messageGenerator.generateLengthFailureMessage();
+      @failureMessage = @messageGenerator.generateDifferentKeyMessage();
       return false;
     end
 
@@ -93,18 +91,21 @@ class EqualWithOutOrderJson
     end
 
     unless actualHash.length == expectedObj.length
-      @failureMessage = @messageGenerator.generateLengthFailureMessage();
+      @failureMessage = @messageGenerator.generateDifferentKeyMessage();
       return false;
     end
 
     expectedObj.each do |expected_key, expected_value|
       @currentJsonKey = expected_key
-      @jsonPath = addKeyToPath(expected_key)
       actualValue = actualHash[expected_key]
       if actualValue.nil?
+        @currentActualObj = actualHash
+        @currentExpectedObj = expectedObj
         @failureMessage = @messageGenerator.generateDifferentKeyMessage()
         return false
       end
+
+      @jsonPath = addKeyToPath(expected_key)
       match = matchesObject?(expected_value, actualHash[expected_key])
       @jsonPath = removeKeyFromPath(expected_key)
       if match == false

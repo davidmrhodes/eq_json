@@ -29,42 +29,6 @@ class EqJsonMessageGenerator
             "#{jsonErrorInfo}"
   end
 
-
-  def generateLengthFailureMessage()
-
-    if @matcher.actual.length > @matcher.expected.length
-      smallerIs = "expected"
-      larger = @matcher.actual
-      smaller = @matcher.expected
-    else
-      smallerIs = "actual"
-      larger = @matcher.expected
-      smaller = @matcher.actual
-    end
-
-    difference = larger.keys - smaller.keys
-    merged = larger.merge(smaller)
-
-    diff = {}
-    difference.each {|k| diff[k] = merged[k] }
-
-    diffJson = diff.to_json
-
-    differ = RSpec::Support::Differ.new
-
-    differ = RSpec::Support::Differ.new(
-          :object_preparer => lambda { |expected| RSpec::Matchers::Composable.surface_descriptions_in(expected) },
-          :color => RSpec::Matchers.configuration.color?
-      )
-
-    @difference = differ.diff(@matcher.expected, @matcher.actual)
-
-    return getExpectedActualJson() + "\n" +
-           "Diff:\n" +
-           "JSON path { #{smallerIs} does not contain #{diffJson}\n" +
-           @difference
-  end
-
   def generateDifferentValueMessage()
 
     # TODO have item in todo list to use a diff if the value is a String
@@ -88,19 +52,22 @@ class EqJsonMessageGenerator
   end
 
   def generateDifferentKeyMessage()
+    if @matcher.currentActualObj.nil?
+       objectsNotInExpected = getObjectsNotIn(@matcher.actual, @matcher.expected);
+       objectsNotInActual = getObjectsNotIn(@matcher.expected, @matcher.actual);
+    else
+       objectsNotInExpected = getObjectsNotIn(@matcher.currentActualObj, @matcher.currentExpectedObj);
+       objectsNotInActual = getObjectsNotIn(@matcher.currentExpectedObj, @matcher.currentActualObj);
+    end
 
-    objectsNotInExpected = getObjectsNotIn(@matcher.actual, @matcher.expected);
-
-    objectsNotInActual = getObjectsNotIn(@matcher.expected, @matcher.actual);
-
-    jsonErrorInfo = "JSON path $.\n"
+    jsonErrorInfo = "JSON path #{@matcher.jsonPath}\n"
 
     unless objectsNotInExpected.empty?
       jsonErrorInfo << "expected does not contain #{objectsNotInExpected.to_json}\n"
     end
 
     unless objectsNotInActual.empty?
-      jsonErrorInfo << @colorizer.green("actual does not contain #{objectsNotInActual.to_json}")
+      jsonErrorInfo << @colorizer.green("actual does not contain #{objectsNotInActual.to_json}\n")
     end
 
     differ = RSpec::Support::Differ.new
@@ -110,7 +77,11 @@ class EqJsonMessageGenerator
           :color => RSpec::Matchers.configuration.color?
     )
 
-    @difference = differ.diff(@matcher.expected, @matcher.actual)
+    if @matcher.currentActualObj.nil?
+       @difference = differ.diff(@matcher.expected, @matcher.actual)
+    else
+       @difference = differ.diff(@matcher.currentExpectedObj, @matcher.currentActualObj)
+    end
 
     return getExpectedActualJson() + "\n" +
            "\nDiff:\n" +

@@ -84,8 +84,9 @@ describe 'test single level json objects' do
 
       String expectedErrorMessage= "Expected: #{expectedJson}\n" +
                                     makeGreen("Actual: #{actualJson}") + "\n" +
-                                    "Diff:\n" +
-                                    "JSON path { actual does not contain {\"author\":\"J.K. Rowling\"}\n" +
+                                    "\nDiff:\n" +
+                                    "JSON path $.\n" +
+                                    makeGreen("actual does not contain {\"author\":\"J.K. Rowling\"}\n") +
                                     wrapWithResetColor("\n") + makeBlue("@@ -1,2 +1,3 @@\n") +
                                     makeGreen("+:author => \"J.K. Rowling\",\n") +
                                     wrapWithResetColor(" :name => \"Harry Potter and the Sorcerer's Stone\",\n")
@@ -115,8 +116,9 @@ describe 'test single level json objects' do
 
       String expectedErrorMessage= "Expected: #{expectedJson}\n" +
                                     makeGreen("Actual: #{actualJson}") + "\n" +
-                                    "Diff:\n" +
-                                    "JSON path { expected does not contain {\"author\":\"J.K. Rowling\"}\n" +
+                                    "\nDiff:\n" +
+                                    "JSON path $.\n" +
+                                    "expected does not contain {\"author\":\"J.K. Rowling\"}\n" +
                                     wrapWithResetColor("\n") + makeBlue("@@ -1,3 +1,2 @@\n") +
                                     makeRed("-:author => \"J.K. Rowling\",\n") +
                                     wrapWithResetColor(" :name => \"Harry Potter and the Sorcerer's Stone\",\n")
@@ -147,8 +149,9 @@ describe 'test single level json objects' do
 
       String expectedErrorMessage= "Expected: #{expectedJson}\n" +
                                     makeGreen("Actual: #{actualJson}") + "\n" +
-                                    "Diff:\n" +
-                                    "JSON path { expected does not contain {\"author\":\"J.K. Rowling\",\"isbn\":439708184}\n" +
+                                    "\nDiff:\n" +
+                                    "JSON path $.\n" +
+                                    "expected does not contain {\"author\":\"J.K. Rowling\",\"isbn\":439708184}\n" +
                                     wrapWithResetColor("\n") + makeBlue("@@ -1,4 +1,2 @@\n") +
                                     makeRed("-:author => \"J.K. Rowling\",\n") +
                                     makeRed("-:isbn => 439708184,\n") +
@@ -184,7 +187,7 @@ describe 'test single level json objects' do
                                     "\nDiff:\n" +
                                     "JSON path $.\n" +
                                     "expected does not contain {\"author\":\"J.K. Rowling\"}\n" +
-                                    makeGreen("actual does not contain {\"publisher\":\"ACME Publisher Inc.\"}") + wrapWithResetColor("\n") +
+                                    makeGreen("actual does not contain {\"publisher\":\"ACME Publisher Inc.\"}\n") + wrapWithResetColor("\n") +
                                     wrapWithResetColor("\n") + makeBlue("@@ -1,3 +1,3 @@\n") +
                                     makeRed("-:author => \"J.K. Rowling\",\n") +
                                     wrapWithResetColor(" :name => \"Harry Potter and the Sorcerer's Stone\",\n") +
