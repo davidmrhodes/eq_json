@@ -33,13 +33,6 @@ class EqualWithOutOrderJson
     "Excpect {@expected}"
   end
 
-  # def differ
-  #   RSpec::Support::Differ.new(
-  #       :object_preparer => lambda { |object| RSpec::Matchers::Composable.surface_descriptions_in(object) },
-  #       :color => RSpec::Matchers.configuration.color?
-  #   )
-  # end
-
   private
 
   def matchesObject?(expectedObj, actualObj)

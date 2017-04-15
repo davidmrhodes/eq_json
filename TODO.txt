@@ -9,3 +9,10 @@
     Answer:  expected is - in red
 
 4) If object is a string and is multi line use differ in failure_message
+
+5) test for json object combinations of (do for actual also)
+       first key in map not in expected
+       middle key in map not in expected
+       last key in map not in expected
+
+6) Do I need to check expected and actual are valid josn?
