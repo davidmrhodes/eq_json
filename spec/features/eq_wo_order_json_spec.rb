@@ -23,13 +23,13 @@ describe 'test objects not same type' do
     expect(customMatcher.matches?(expected)).to eq(false)
 
     String expectedErrorMessage= "Expected: #{expectedJson}\n" +
-                                 makeGreen("Actual: #{actualJson}") + "\n" +
+                                 makeGreen("  Actual: #{actualJson}") + "\n" +
                                  "Diff:\n" +
                                  "JSON path $. expected array type but actual is object\n"
 
     expect(customMatcher.failure_message).to eq(expectedErrorMessage)
 
-    expect(expected).not_to eq_wo_order_json(actual)
+    expect(expected).not_to eq_json(actual)
   end
 
 end
@@ -47,7 +47,7 @@ describe 'test single level json objects' do
         author: 'J.K. Rowling'
       }
 
-      expect(expected).to eq_wo_order_json(actual)
+      expect(expected).to eq_json(actual)
     end
 
     it 'test that objects equal out of order' do
@@ -61,7 +61,7 @@ describe 'test single level json objects' do
         name: 'Harry Potter and the Sorcerer\'s Stone'
       }
 
-      expect(expected).to eq_wo_order_json(actual)
+      expect(expected).to eq_json(actual)
     end
 
     it 'actual missing object' do
@@ -83,7 +83,7 @@ describe 'test single level json objects' do
       actualJson=actual.to_json;
 
       String expectedErrorMessage= "Expected: #{expectedJson}\n" +
-                                    makeGreen("Actual: #{actualJson}") + "\n" +
+                                    makeGreen("  Actual: #{actualJson}") + "\n" +
                                     "\nDiff:\n" +
                                     "JSON path $.\n" +
                                     makeGreen("actual does not contain {\"author\":\"J.K. Rowling\"}\n") +
@@ -93,7 +93,7 @@ describe 'test single level json objects' do
 
       expect(customMatcher.failure_message).to eq(expectedErrorMessage)
 
-      expect(expected).not_to eq_wo_order_json(actual)
+      expect(expected).not_to eq_json(actual)
     end
 
     it 'expected missing object' do
@@ -115,7 +115,7 @@ describe 'test single level json objects' do
       actualJson=actual.to_json;
 
       String expectedErrorMessage= "Expected: #{expectedJson}\n" +
-                                    makeGreen("Actual: #{actualJson}") + "\n" +
+                                    makeGreen("  Actual: #{actualJson}") + "\n" +
                                     "\nDiff:\n" +
                                     "JSON path $.\n" +
                                     "expected does not contain {\"author\":\"J.K. Rowling\"}\n" +
@@ -125,7 +125,7 @@ describe 'test single level json objects' do
 
       expect(customMatcher.failure_message).to eq(expectedErrorMessage)
 
-      expect(expected).not_to eq_wo_order_json(actual)
+      expect(expected).not_to eq_json(actual)
     end
 
     it 'expected missing mutiple objects' do
@@ -148,7 +148,7 @@ describe 'test single level json objects' do
       actualJson=actual.to_json;
 
       String expectedErrorMessage= "Expected: #{expectedJson}\n" +
-                                    makeGreen("Actual: #{actualJson}") + "\n" +
+                                    makeGreen("  Actual: #{actualJson}") + "\n" +
                                     "\nDiff:\n" +
                                     "JSON path $.\n" +
                                     "expected does not contain {\"author\":\"J.K. Rowling\",\"isbn\":439708184}\n" +
@@ -159,7 +159,7 @@ describe 'test single level json objects' do
 
       expect(customMatcher.failure_message).to eq(expectedErrorMessage)
 
-      expect(expected).not_to eq_wo_order_json(actual)
+      expect(expected).not_to eq_json(actual)
     end
 
     it 'expected and actual both have missing objects' do
@@ -183,7 +183,7 @@ describe 'test single level json objects' do
       actualJson=actual.to_json;
 
       String expectedErrorMessage= "Expected: #{expectedJson}\n" +
-                                    makeGreen("Actual: #{actualJson}") + "\n" +
+                                    makeGreen("  Actual: #{actualJson}") + "\n" +
                                     "\nDiff:\n" +
                                     "JSON path $.\n" +
                                     "expected does not contain {\"author\":\"J.K. Rowling\"}\n" +
@@ -195,7 +195,7 @@ describe 'test single level json objects' do
 
       expect(customMatcher.failure_message).to eq(expectedErrorMessage)
 
-      expect(expected).not_to eq_wo_order_json(actual)
+      expect(expected).not_to eq_json(actual)
     end
 
     it 'expected and actual have different values for key' do
@@ -218,7 +218,7 @@ describe 'test single level json objects' do
       actualJson=actual.to_json;
 
       String expectedErrorMessage= "Expected: #{expectedJson}\n" +
-                                    makeGreen("Actual: #{actualJson}") + "\n" +
+                                    makeGreen("  Actual: #{actualJson}") + "\n" +
                                     "Diff:\n" +
                                     "JSON path $.name\n" +
                                     "\texpected: \"Harry Potter and the Sorcerer\'s Stone\"\n" +
@@ -226,6 +226,6 @@ describe 'test single level json objects' do
 
       expect(customMatcher.failure_message).to eq(expectedErrorMessage)
 
-      expect(expected).not_to eq_wo_order_json(actual)
+      expect(expected).not_to eq_json(actual)
     end
   end

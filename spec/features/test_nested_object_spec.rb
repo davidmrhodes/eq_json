@@ -46,7 +46,7 @@ describe 'test nested objects not same type' do
     expect(customMatcher.matches?(expected)).to eq(false)
 
     String expectedErrorMessage= "Expected: #{expectedJson}\n" +
-                                 makeGreen("Actual: #{actualJson}") + "\n" +
+                                 makeGreen("  Actual: #{actualJson}") + "\n" +
                                  "Diff:\n" +
                                  "JSON path $.publisherInfo.publishDate expected array type but actual is object\n" +
                                  "\tExpected: [" +
@@ -57,7 +57,7 @@ describe 'test nested objects not same type' do
 
     expect(customMatcher.failure_message).to eq(expectedErrorMessage)
 
-    expect(expected).not_to eq_wo_order_json(actual)
+    expect(expected).not_to eq_json(actual)
   end
 end
 
@@ -90,7 +90,7 @@ describe 'test nested level json objects' do
         }
       }
 
-    expect(expected).to eq_wo_order_json(actual)
+    expect(expected).to eq_json(actual)
   end
 
   it 'test that objects equal out of order' do
@@ -121,7 +121,7 @@ describe 'test nested level json objects' do
       }
     }
 
-    expect(expected).to eq_wo_order_json(actual)
+    expect(expected).to eq_json(actual)
   end
 
   it 'actual missing object' do
@@ -159,7 +159,7 @@ describe 'test nested level json objects' do
     actualJson=actual.to_json;
 
     String expectedErrorMessage= "Expected: #{expectedJson}\n" +
-                                  makeGreen("Actual: #{actualJson}") + "\n" +
+                                  makeGreen("  Actual: #{actualJson}") + "\n" +
                                   "\nDiff:\n" +
                                   "JSON path $.publisherInfo.publishDate\n" +
                                   makeGreen("actual does not contain {\"day\":23}\n") +
@@ -170,7 +170,7 @@ describe 'test nested level json objects' do
 
     expect(customMatcher.failure_message).to eq(expectedErrorMessage)
 
-    expect(expected).not_to eq_wo_order_json(actual)
+    expect(expected).not_to eq_json(actual)
   end
 
   it 'expected missing object' do
@@ -208,7 +208,7 @@ describe 'test nested level json objects' do
     actualJson=actual.to_json;
 
     String expectedErrorMessage= "Expected: #{expectedJson}\n" +
-                                  makeGreen("Actual: #{actualJson}") + "\n" +
+                                  makeGreen("  Actual: #{actualJson}") + "\n" +
                                   "\nDiff:\n" +
                                   "JSON path $.publisherInfo.publishDate\n" +
                                   "expected does not contain {\"year\":2015}\n" +
@@ -219,7 +219,7 @@ describe 'test nested level json objects' do
 
     expect(customMatcher.failure_message).to eq(expectedErrorMessage)
 
-    expect(expected).not_to eq_wo_order_json(actual)
+    expect(expected).not_to eq_json(actual)
   end
 
   it 'expected missing mutiple objects' do
@@ -256,7 +256,7 @@ describe 'test nested level json objects' do
     actualJson=actual.to_json;
 
     String expectedErrorMessage= "Expected: #{expectedJson}\n" +
-                                  makeGreen("Actual: #{actualJson}") + "\n" +
+                                  makeGreen("  Actual: #{actualJson}") + "\n" +
                                   "\nDiff:\n" +
                                   "JSON path $.publisherInfo.publishDate\n" +
                                   "expected does not contain {\"day\":23,\"year\":2015}\n" +
@@ -268,7 +268,7 @@ describe 'test nested level json objects' do
 
     expect(customMatcher.failure_message).to eq(expectedErrorMessage)
 
-    expect(expected).not_to eq_wo_order_json(actual)
+    expect(expected).not_to eq_json(actual)
   end
 
 
@@ -306,7 +306,7 @@ describe 'test nested level json objects' do
     actualJson=actual.to_json;
 
     String expectedErrorMessage= "Expected: #{expectedJson}\n" +
-                                  makeGreen("Actual: #{actualJson}") + "\n" +
+                                  makeGreen("  Actual: #{actualJson}") + "\n" +
                                   "\nDiff:\n" +
                                   "JSON path $.publisherInfo.publishDate\n" +
                                   "expected does not contain {\"year\":2015}\n" +
@@ -318,7 +318,7 @@ describe 'test nested level json objects' do
 
     expect(customMatcher.failure_message).to eq(expectedErrorMessage)
 
-    expect(expected).not_to eq_wo_order_json(actual)
+    expect(expected).not_to eq_json(actual)
   end
 
 
@@ -358,7 +358,7 @@ describe 'test nested level json objects' do
     actualJson=actual.to_json;
 
     String expectedErrorMessage= "Expected: #{expectedJson}\n" +
-                                  makeGreen("Actual: #{actualJson}") + "\n" +
+                                  makeGreen("  Actual: #{actualJson}") + "\n" +
                                   "Diff:\n" +
                                   "JSON path $.publisherInfo.publishDate.year\n" +
                                   "\texpected: \"2015\"\n" +
@@ -366,7 +366,7 @@ describe 'test nested level json objects' do
 
     expect(customMatcher.failure_message).to eq(expectedErrorMessage)
 
-    expect(expected).not_to eq_wo_order_json(actual)
+    expect(expected).not_to eq_json(actual)
   end
 
 end

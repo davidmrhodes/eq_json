@@ -94,7 +94,7 @@ class EqJsonMessageGenerator
     actualJson=@matcher.actual.to_json;
 
     return "Expected: #{expectedJson}\n" +
-           @colorizer.green("Actual: #{actualJson}")
+           @colorizer.green("  Actual: #{actualJson}")
   end
 
   def getObjectsNotIn(hash1, hash2)

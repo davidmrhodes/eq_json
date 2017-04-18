@@ -123,6 +123,6 @@ class EqualWithOutOrderJson
 
 end
 
-def eq_wo_order_json(*args)
+def eq_json(*args)
   EqualWithOutOrderJson.new(*args)
 end
