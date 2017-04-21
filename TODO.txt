@@ -16,3 +16,5 @@
        last key in map not in expected
 
 6) Do I need to check expected and actual are valid josn?
+
+7) Add comparable function with an selection criteria for and id to compare arrays 

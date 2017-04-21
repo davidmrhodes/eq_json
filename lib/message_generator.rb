@@ -118,4 +118,68 @@ class EqJsonMessageGenerator
     end
   end
 
+  def generateDifferentSizeArrayMessage()
+    # if @matcher.currentActualObj.nil?
+    #    objectsNotInExpected = getObjectsNotInArray(@matcher.actual, @matcher.expected);
+    #    objectsNotInActual = getObjectsNotInArray(@matcher.expected, @matcher.actual);
+    # else
+    #    objectsNotInExpected = getObjectsNotIn(@matcher.currentActualObj, @matcher.currentExpectedObj);
+    #    objectsNotInActual = getObjectsNotIn(@matcher.currentExpectedObj, @matcher.currentActualObj);
+    # end
+
+    jsonErrorInfo = "JSON path #{@matcher.jsonPath}[] expected length #{@matcher.expected.length} " +
+                    "actual length #{@matcher.actual.length}\n"
+
+    # unless objectsNotInExpected.empty?
+    #   jsonErrorInfo << "expected does not contain #{objectsNotInExpected.to_json}\n"
+    # end
+    #
+    # unless objectsNotInActual.empty?
+    #   jsonErrorInfo << @colorizer.green("actual does not contain #{objectsNotInActual.to_json}\n")
+    # end
+
+    return getExpectedActualJson() + "\n" +
+           "\nDiff:\n" +
+           jsonErrorInfo
+  end
+
+  def generateExpectedItemNotFoundInArray(expected_item)
+    # if @matcher.currentActualObj.nil?
+    #    objectsNotInExpected = getObjectsNotInArray(@matcher.actual, @matcher.expected);
+    #    objectsNotInActual = getObjectsNotInArray(@matcher.expected, @matcher.actual);
+    # else
+    #    objectsNotInExpected = getObjectsNotIn(@matcher.currentActualObj, @matcher.currentExpectedObj);
+    #    objectsNotInActual = getObjectsNotIn(@matcher.currentExpectedObj, @matcher.currentActualObj);
+    # end
+
+    jsonErrorInfo = "JSON path #{@matcher.jsonPath}[] could not find:\n" +
+                    "#{expected_item.to_json}\n" +
+                    "in actual\n"
+
+    # unless objectsNotInExpected.empty?
+    #   jsonErrorInfo << "expected does not contain #{objectsNotInExpected.to_json}\n"
+    # end
+    #
+    # unless objectsNotInActual.empty?
+    #   jsonErrorInfo << @colorizer.green("actual does not contain #{objectsNotInActual.to_json}\n")
+    # end
+
+    return getExpectedActualJson() + "\n" +
+           "\nDiff:\n" +
+           jsonErrorInfo
+  end
+
+  # def getObjectsNotIn(array1, array2)
+  #   missing = {}
+  #   array1.each do |array1_item|
+  #     int item1Count = array1.count(array1_item)
+  #     int item2Count = array2.count(array1_item)
+  #
+  #     unless hash2.has_key?(hash1_key)
+  #       missing[hash1_key] = hash1_value
+  #     end
+  #   end
+  #   return missing
+  # end
+
 end

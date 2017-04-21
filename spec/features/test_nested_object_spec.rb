@@ -321,7 +321,6 @@ describe 'test nested level json objects' do
     expect(expected).not_to eq_json(actual)
   end
 
-
   it 'expected and actual have different values for key' do
 
     actual = {

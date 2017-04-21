@@ -1,5 +1,6 @@
 require 'pp'
 require 'message_generator'
+require 'eq_json_array'
 
 class EqualWithOutOrderJson
 
@@ -64,16 +65,27 @@ class EqualWithOutOrderJson
     end
 
     unless actualArray.length == expectedObj.length
-      @failureMessage = @messageGenerator.generateDifferentKeyMessage();
+      @failureMessage = @messageGenerator.generateDifferentSizeArrayMessage();
       return false;
     end
 
-    expectedObj.all? do |expected_item|
-      actualArray.any? do |candidate|
-        matchesObject?(expected_item, candidate)
+    arrayUtil = EqualJsonArray.new
+
+    expectedObj.each do |expected_item|
+      # actualArray.count do |candidate|
+      #   puts "candidate is #{candidate}"
+      #   puts "expected_item is #{expected_item}"
+      # end
+      found = actualArray.any? do |candidate|
+        arrayUtil.itemEqual?(expected_item, candidate)
+      end
+      if !found
+        @failureMessage = @messageGenerator.generateExpectedItemNotFoundInArray(expected_item)
+        return false
       end
     end
 
+    return true
   end
 
   def hashes_match?(expectedObj, actualHash)
