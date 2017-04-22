@@ -143,7 +143,7 @@ class EqJsonMessageGenerator
            jsonErrorInfo
   end
 
-  def generateExpectedItemNotFoundInArray(expected_item)
+  def generateExpectedItemNotFoundInArray(expected_item, expected_count, actual_count)
     # if @matcher.currentActualObj.nil?
     #    objectsNotInExpected = getObjectsNotInArray(@matcher.actual, @matcher.expected);
     #    objectsNotInActual = getObjectsNotInArray(@matcher.expected, @matcher.actual);
@@ -152,9 +152,17 @@ class EqJsonMessageGenerator
     #    objectsNotInActual = getObjectsNotIn(@matcher.currentExpectedObj, @matcher.currentActualObj);
     # end
 
-    jsonErrorInfo = "JSON path #{@matcher.jsonPath}[] could not find:\n" +
-                    "#{expected_item.to_json}\n" +
-                    "in actual\n"
+    if actual_count == 0
+      jsonErrorInfo = "JSON path #{@matcher.jsonPath}[] could not find:\n" +
+                      "#{expected_item.to_json}\n" +
+                      "in actual\n"
+    else
+      jsonErrorInfo = "JSON path #{@matcher.jsonPath}[] wrong number of:\n" +
+                      "#{expected_item.to_json}\n" +
+                      "in actual\n" +
+                      "expected: #{expected_count}\n" +
+                      @colorizer.green("     got: #{actual_count}") + "\n"
+    end
 
     # unless objectsNotInExpected.empty?
     #   jsonErrorInfo << "expected does not contain #{objectsNotInExpected.to_json}\n"

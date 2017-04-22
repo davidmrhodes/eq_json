@@ -72,17 +72,20 @@ class EqualWithOutOrderJson
     arrayUtil = EqualJsonArray.new
 
     expectedObj.each do |expected_item|
-      # actualArray.count do |candidate|
-      #   puts "candidate is #{candidate}"
-      #   puts "expected_item is #{expected_item}"
-      # end
-      found = actualArray.any? do |candidate|
+
+      expectedCount = expectedObj.count do |item|
+          arrayUtil.itemEqual?(expected_item, item)
+      end
+
+      actualCount = actualArray.count do |candidate|
         arrayUtil.itemEqual?(expected_item, candidate)
       end
-      if !found
-        @failureMessage = @messageGenerator.generateExpectedItemNotFoundInArray(expected_item)
+
+      if expectedCount != actualCount
+        @failureMessage = @messageGenerator.generateExpectedItemNotFoundInArray(expected_item, expectedCount, actualCount)
         return false
       end
+
     end
 
     return true
