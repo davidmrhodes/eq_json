@@ -1,4 +1,4 @@
-require 'eq_wo_order_json'
+require 'eq_json'
 require 'json'
 require 'spec_helper'
 
@@ -178,7 +178,7 @@ describe 'test top level array' do
     expect(expected).not_to eq_json(actual)
   end
 
-  it 'test expected has two of same elements and actual has 1' do
+  it 'test expected has two of same elements and actual has one' do
 
     book3Item =
     {

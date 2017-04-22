@@ -1,4 +1,4 @@
-require 'eq_wo_order_json'
+require 'eq_json'
 require 'json'
 
 describe 'test nested objects not same type' do
