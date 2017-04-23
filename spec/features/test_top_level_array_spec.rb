@@ -52,6 +52,57 @@ describe 'test top level array not same size' do
 
     expect(expected).not_to eq_json(actual)
   end
+
+  it 'test not the same object type' do
+
+    actual = [
+        {
+          bookId: "1",
+          name: "Harry Potter and the Sorcerer's Stone",
+          author: "J.K. Rowling"
+        },
+        {
+          bookId: "2",
+          name: "Eragon",
+          author: "Christopher Paolini"
+        },
+        {
+          bookId: "3",
+          name: "The Fellowship of the Ring",
+          author: "J.R.R. Tolkien"
+        }
+    ]
+
+    expected = {
+        book1: {
+          bookId: "1",
+          name: "Harry Potter and the Sorcerer's Stone",
+          author: "J.K. Rowling"
+        },
+        book2: {
+          bookId: "2",
+          name: "Eragon",
+          author: "Christopher Paolini"
+        }
+    }
+
+    customMatcher=EqualWithOutOrderJson.new(actual)
+
+    expect(customMatcher.matches?(expected)).to eq(false)
+
+    expectedJson=expected.to_json;
+    actualJson=actual.to_json;
+
+    String expectedErrorMessage= "Expected: #{expectedJson}\n" +
+                                  makeGreen("  Actual: #{actualJson}") + "\n" +
+                                  "Diff:\n" +
+                                  "JSON path $. expected object type but actual is array\n"
+
+    expect(customMatcher.failure_message).to eq(expectedErrorMessage)
+
+    expect(expected).not_to eq_json(actual)
+  end
+
 end
 
 describe 'test top level array' do
