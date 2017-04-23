@@ -16,7 +16,7 @@ class EqJsonMessageGenerator
       actualType = getJsonType(@matcher.currentActualObj)
       expectedType = getJsonType(@matcher.currentExpectedObj)
       currentJsonDiff = "\tExpected: #{@matcher.currentExpectedObj.to_json}\n" +
-                        @colorizer.green("\tActual: #{@matcher.currentActualObj.to_json}") + "\n"
+                        @colorizer.green("\t  Actual: #{@matcher.currentActualObj.to_json}") + "\n"
     end
 
     jsonErrorInfo = "JSON path #{@matcher.jsonPath} expected #{expectedType} type but actual is #{actualType}\n"

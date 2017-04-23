@@ -53,7 +53,7 @@ describe 'test nested objects not same type' do
                                                 "{\"month\":2,\"day\":24,\"year\":2011}," +
                                                 "{\"month\":1,\"day\":2,\"year\":1999}" +
                                              "]\n" +
-                                makeGreen("\tActual: {\"month\":3,\"day\":23,\"year\":2015}") + "\n"
+                                makeGreen("\t  Actual: {\"month\":3,\"day\":23,\"year\":2015}") + "\n"
 
     expect(customMatcher.failure_message).to eq(expectedErrorMessage)
 
