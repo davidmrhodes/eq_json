@@ -119,24 +119,16 @@ class EqJsonMessageGenerator
   end
 
   def generateDifferentSizeArrayMessage()
-    # if @matcher.currentActualObj.nil?
-    #    objectsNotInExpected = getObjectsNotInArray(@matcher.actual, @matcher.expected);
-    #    objectsNotInActual = getObjectsNotInArray(@matcher.expected, @matcher.actual);
-    # else
-    #    objectsNotInExpected = getObjectsNotIn(@matcher.currentActualObj, @matcher.currentExpectedObj);
-    #    objectsNotInActual = getObjectsNotIn(@matcher.currentExpectedObj, @matcher.currentActualObj);
-    # end
+    if @matcher.currentActualObj.nil?
+      expectedLength = @matcher.expected.length
+      actualLength = @matcher.actual.length
+    else
+      expectedLength = @matcher.currentExpectedObj.length
+      actualLength = @matcher.currentActualObj.length
+    end
 
-    jsonErrorInfo = "JSON path #{@matcher.jsonPath}[] expected length #{@matcher.expected.length} " +
-                    "actual length #{@matcher.actual.length}\n"
-
-    # unless objectsNotInExpected.empty?
-    #   jsonErrorInfo << "expected does not contain #{objectsNotInExpected.to_json}\n"
-    # end
-    #
-    # unless objectsNotInActual.empty?
-    #   jsonErrorInfo << @colorizer.green("actual does not contain #{objectsNotInActual.to_json}\n")
-    # end
+    jsonErrorInfo = "JSON path #{@matcher.jsonPath}[] expected length #{expectedLength} " +
+                    "actual length #{actualLength}\n"
 
     return getExpectedActualJson() + "\n" +
            "\nDiff:\n" +

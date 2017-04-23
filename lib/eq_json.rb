@@ -113,9 +113,9 @@ class EqualWithOutOrderJson
         return false
       end
 
-      @jsonPath = addKeyToPath(expected_key)
+      addKeyToPath(expected_key)
       match = matchesObject?(expected_value, actualHash[expected_key])
-      @jsonPath = removeKeyFromPath(expected_key)
+      removeKeyFromPath(expected_key)
       if match == false
         return false;
       end
@@ -133,7 +133,10 @@ class EqualWithOutOrderJson
   end
 
   def removeKeyFromPath(jsonKey)
-    @jsonPath = @jsonPath[0, @jsonPath.length - "#{jsonKey}".length]
+    @jsonPath = @jsonPath[0, @jsonPath.length - "#{jsonKey}".length - 1]
+    if @jsonPath == "$"
+      @jsonPath << "."
+    end
   end
 
 end

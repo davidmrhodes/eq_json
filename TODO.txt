@@ -17,4 +17,15 @@
 
 6) Do I need to check expected and actual are valid josn?
 
-7) Add comparable function with an selection criteria for and id to compare arrays 
+
+7) Add comparable function with an selection criteria for and id to compare arrays
+
+8) If objects are large write them to a files in temp
+Could be done via configuration to find if configuration exists:
+
+if RSpec.configuration.methods.include? :json_debug_config
+   puts "json_debug_config #{RSpec.configuration.json_debug_config}"
+end
+
+Then put this in spec_helper:
+c.json_debug_config=true
