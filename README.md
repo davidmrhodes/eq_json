@@ -1,28 +1,20 @@
-# EqWoOrder
+# EqJson
 
-[![Build Status](https://travis-ci.org/jadekler/eq_wo_order.svg?branch=master)](https://travis-ci.org/jadekler/eq_wo_order)
+<!-- [![Build Status](https://travis-ci.org/jadekler/eq_wo_order.svg?branch=master)](https://travis-ci.org/jadekler/eq_wo_order) -->
 
-RSpec equality matcher that deeply compares array without order - arrays 
-of primitives, hashes, and arrays.
+RSpec equality matcher that JSON.  Outputs meaningful failure messages.
 
-As multi-core/multi-threaded concurrent processing becomes more 
-prevalent we will see lists of items being returned in non-deterministic
-order. The idea behind this gem is that we when we're testing APIs that return 
-objects with these arrays of items, we neither want to care about the
-order NOR do we want to dig into the data to sort/match specific fields.
-See `spec/features/eq_wo_order_spec.rb` for an extensive set of examples
-showcasing this gem's usage.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'eq_wo_order'
+gem 'eq_json'
 ```
 
 And then execute:
- 
+
 ```
 $ bundle
 ```
@@ -30,23 +22,48 @@ $ bundle
 Or install it yourself as:
 
 ```
-$ gem install eq_wo_order
+$ gem install eq_json
 ```
 
 ## Usage
 
-```
-require 'eq_wo_order'
+```ruby
+require 'eq_json'
 
-first = [[1, 2, 3]]
-second = [[3, 1, 2]]
+actual = {
+  name: 'Harry Potter and the Sorcerer\'s Stone',
+  publisherInfo: {
+    publishDate: {
+      year: 2015,
+      month: 3,
+      day: 23
+    },
+    name: "ACME Publisher Inc."
+  },
+  author: 'J.K. Rowling'
+}
 
-expect(first).to eq_wo_order second
+expected = {
+  name: 'Harry Potter and the Sorcerer\'s Stone',
+  author: 'J.K. Rowling',
+  publisherInfo: {
+    name: "ACME Publisher Inc.",
+    publishDate: {
+      month: 3,
+      day: 23,
+      year: 2015
+    }
+  }
+}
+
+expect(expected).to eq_json(actual)
 ```
+# More Documentation
+[Keynote Slides]()
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/eq_wo_order/fork )
+1. Fork it ( https://github.com/[my-github-username]/eq_json/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
