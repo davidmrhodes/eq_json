@@ -7,32 +7,32 @@ describe 'test top level array not same size' do
 
     actual = [
         {
-          bookId: "1",
-          name: "Harry Potter and the Sorcerer's Stone",
-          author: "J.K. Rowling"
+            bookId: "1",
+            name: "Harry Potter and the Sorcerer's Stone",
+            author: "J.K. Rowling"
         },
         {
-          bookId: "2",
-          name: "Eragon",
-          author: "Christopher Paolini"
+            bookId: "2",
+            name: "Eragon",
+            author: "Christopher Paolini"
         },
         {
-          bookId: "3",
-          name: "The Fellowship of the Ring",
-          author: "J.R.R. Tolkien"
+            bookId: "3",
+            name: "The Fellowship of the Ring",
+            author: "J.R.R. Tolkien"
         }
     ]
 
     expected = [
         {
-          bookId: "1",
-          name: "Harry Potter and the Sorcerer's Stone",
-          author: "J.K. Rowling"
+            bookId: "1",
+            name: "Harry Potter and the Sorcerer's Stone",
+            author: "J.K. Rowling"
         },
         {
-          bookId: "2",
-          name: "Eragon",
-          author: "Christopher Paolini"
+            bookId: "2",
+            name: "Eragon",
+            author: "Christopher Paolini"
         }
     ]
 
@@ -44,9 +44,9 @@ describe 'test top level array not same size' do
     actualJson=actual.to_json;
 
     String expectedErrorMessage= "Expected: #{expectedJson}\n" +
-                                  makeGreen("  Actual: #{actualJson}") + "\n" +
-                                  "\nDiff:\n" +
-                                  "JSON path $.[] expected length 2 actual length 3\n"
+        makeGreen("  Actual: #{actualJson}") + "\n" +
+        "\nDiff:\n" +
+        "JSON path $.[] expected length 2 actual length 3\n"
 
     expect(customMatcher.failure_message).to eq(expectedErrorMessage)
 
@@ -57,32 +57,32 @@ describe 'test top level array not same size' do
 
     actual = [
         {
-          bookId: "1",
-          name: "Harry Potter and the Sorcerer's Stone",
-          author: "J.K. Rowling"
+            bookId: "1",
+            name: "Harry Potter and the Sorcerer's Stone",
+            author: "J.K. Rowling"
         },
         {
-          bookId: "2",
-          name: "Eragon",
-          author: "Christopher Paolini"
+            bookId: "2",
+            name: "Eragon",
+            author: "Christopher Paolini"
         },
         {
-          bookId: "3",
-          name: "The Fellowship of the Ring",
-          author: "J.R.R. Tolkien"
+            bookId: "3",
+            name: "The Fellowship of the Ring",
+            author: "J.R.R. Tolkien"
         }
     ]
 
     expected = {
         book1: {
-          bookId: "1",
-          name: "Harry Potter and the Sorcerer's Stone",
-          author: "J.K. Rowling"
+            bookId: "1",
+            name: "Harry Potter and the Sorcerer's Stone",
+            author: "J.K. Rowling"
         },
         book2: {
-          bookId: "2",
-          name: "Eragon",
-          author: "Christopher Paolini"
+            bookId: "2",
+            name: "Eragon",
+            author: "Christopher Paolini"
         }
     }
 
@@ -94,9 +94,9 @@ describe 'test top level array not same size' do
     actualJson=actual.to_json;
 
     String expectedErrorMessage= "Expected: #{expectedJson}\n" +
-                                  makeGreen("  Actual: #{actualJson}") + "\n" +
-                                  "Diff:\n" +
-                                  "JSON path $. expected object type but actual is array\n"
+        makeGreen("  Actual: #{actualJson}") + "\n" +
+        "Diff:\n" +
+        "JSON path $. expected object type but actual is array\n"
 
     expect(customMatcher.failure_message).to eq(expectedErrorMessage)
 
@@ -111,27 +111,27 @@ describe 'test top level array' do
 
     actual = [
         {
-          bookId: "1",
-          name: "Harry Potter and the Sorcerer's Stone",
-          author: "J.K. Rowling"
+            bookId: "1",
+            name: "Harry Potter and the Sorcerer's Stone",
+            author: "J.K. Rowling"
         },
         {
-          bookId: "2",
-          name: "Eragon",
-          author: "Christopher Paolini"
+            bookId: "2",
+            name: "Eragon",
+            author: "Christopher Paolini"
         }
     ]
 
     expected = [
         {
-          bookId: "1",
-          name: "Harry Potter and the Sorcerer's Stone",
-          author: "J.K. Rowling"
+            bookId: "1",
+            name: "Harry Potter and the Sorcerer's Stone",
+            author: "J.K. Rowling"
         },
         {
-          bookId: "2",
-          name: "Eragon",
-          author: "Christopher Paolini"
+            bookId: "2",
+            name: "Eragon",
+            author: "Christopher Paolini"
         }
     ]
 
@@ -141,29 +141,29 @@ describe 'test top level array' do
   it 'test actual and expected equal but out of order' do
 
     actual = [
-      {
-        bookId: "1",
-        name: "Harry Potter and the Sorcerer's Stone",
-        author: "J.K. Rowling"
-      },
-      {
-        bookId: "2",
-        name: "Eragon",
-        author: "Christopher Paolini"
-      }
+        {
+            bookId: "1",
+            name: "Harry Potter and the Sorcerer's Stone",
+            author: "J.K. Rowling"
+        },
+        {
+            bookId: "2",
+            name: "Eragon",
+            author: "Christopher Paolini"
+        }
     ]
 
     expected = [
-      {
-        bookId: "2",
-        name: "Eragon",
-        author: "Christopher Paolini"
-      },
-      {
-        bookId: "1",
-        name: "Harry Potter and the Sorcerer's Stone",
-        author: "J.K. Rowling"
-      }
+        {
+            bookId: "2",
+            name: "Eragon",
+            author: "Christopher Paolini"
+        },
+        {
+            bookId: "1",
+            name: "Harry Potter and the Sorcerer's Stone",
+            author: "J.K. Rowling"
+        }
     ]
 
     expect(expected).to eq_json(actual)
@@ -173,39 +173,39 @@ describe 'test top level array' do
 
     actual = [
         {
-          bookId: "1",
-          name: "Harry Potter and the Sorcerer's Stone",
-          author: "J.K. Rowling"
+            bookId: "1",
+            name: "Harry Potter and the Sorcerer's Stone",
+            author: "J.K. Rowling"
         },
         {
-          bookId: "2",
-          name: "Eragon",
-          author: "Christopher Paolini"
+            bookId: "2",
+            name: "Eragon",
+            author: "Christopher Paolini"
         },
         {
-          bookId: "4",
-          name: "Effective Java",
-          author: "Cannot Remember"
+            bookId: "4",
+            name: "Effective Java",
+            author: "Cannot Remember"
         }
     ]
 
     book3Item =
-    {
-      bookId: "3",
-      name: "The Fellowship of the Ring",
-      author: "J.R.R. Tolkien"
-    }
+        {
+            bookId: "3",
+            name: "The Fellowship of the Ring",
+            author: "J.R.R. Tolkien"
+        }
 
     expected = [
         {
-          bookId: "1",
-          name: "Harry Potter and the Sorcerer's Stone",
-          author: "J.K. Rowling"
+            bookId: "1",
+            name: "Harry Potter and the Sorcerer's Stone",
+            author: "J.K. Rowling"
         },
         {
-          bookId: "2",
-          name: "Eragon",
-          author: "Christopher Paolini"
+            bookId: "2",
+            name: "Eragon",
+            author: "Christopher Paolini"
         },
         book3Item
     ]
@@ -218,11 +218,11 @@ describe 'test top level array' do
     actualJson=actual.to_json;
 
     String expectedErrorMessage= "Expected: #{expectedJson}\n" +
-                                  makeGreen("  Actual: #{actualJson}") + "\n" +
-                                  "\nDiff:\n" +
-                                  "JSON path $.[] could not find:\n" +
-                                  "#{book3Item.to_json}\n" +
-                                  "in actual\n"
+        makeGreen("  Actual: #{actualJson}") + "\n" +
+        "\nDiff:\n" +
+        "JSON path $.[] could not find:\n" +
+        "#{book3Item.to_json}\n" +
+        "in actual\n"
 
     expect(customMatcher.failure_message).to eq(expectedErrorMessage)
 
@@ -232,27 +232,27 @@ describe 'test top level array' do
   it 'test expected has two of same elements and actual has one' do
 
     book3Item =
-    {
-      bookId: "3",
-      name: "The Fellowship of the Ring",
-      author: "J.R.R. Tolkien"
-    }
+        {
+            bookId: "3",
+            name: "The Fellowship of the Ring",
+            author: "J.R.R. Tolkien"
+        }
 
     actual = [
         {
-          bookId: "1",
-          name: "Harry Potter and the Sorcerer's Stone",
-          author: "J.K. Rowling"
+            bookId: "1",
+            name: "Harry Potter and the Sorcerer's Stone",
+            author: "J.K. Rowling"
         },
         {
-          bookId: "2",
-          name: "Eragon",
-          author: "Christopher Paolini"
+            bookId: "2",
+            name: "Eragon",
+            author: "Christopher Paolini"
         },
         {
-          bookId: "4",
-          name: "Effective Java",
-          author: "Cannot Remember"
+            bookId: "4",
+            name: "Effective Java",
+            author: "Cannot Remember"
         },
         book3Item
     ]
@@ -261,14 +261,14 @@ describe 'test top level array' do
     expected = [
         book3Item,
         {
-          bookId: "1",
-          name: "Harry Potter and the Sorcerer's Stone",
-          author: "J.K. Rowling"
+            bookId: "1",
+            name: "Harry Potter and the Sorcerer's Stone",
+            author: "J.K. Rowling"
         },
         {
-          bookId: "2",
-          name: "Eragon",
-          author: "Christopher Paolini"
+            bookId: "2",
+            name: "Eragon",
+            author: "Christopher Paolini"
         },
         book3Item
     ]
@@ -281,13 +281,13 @@ describe 'test top level array' do
     actualJson=actual.to_json;
 
     String expectedErrorMessage= "Expected: #{expectedJson}\n" +
-                                  makeGreen("  Actual: #{actualJson}") + "\n" +
-                                  "\nDiff:\n" +
-                                  "JSON path $.[] wrong number of:\n" +
-                                  "#{book3Item.to_json}\n" +
-                                  "in actual\n" +
-                                  "expected: 2\n" +
-                                  makeGreen("     got: 1") + "\n"
+        makeGreen("  Actual: #{actualJson}") + "\n" +
+        "\nDiff:\n" +
+        "JSON path $.[] wrong number of:\n" +
+        "#{book3Item.to_json}\n" +
+        "in actual\n" +
+        "expected: 2\n" +
+        makeGreen("     got: 1") + "\n"
 
     expect(customMatcher.failure_message).to eq(expectedErrorMessage)
 
@@ -297,18 +297,18 @@ describe 'test top level array' do
   it 'test expected has two of same elements and actual has three' do
 
     book3Item =
-    {
-      bookId: "3",
-      name: "The Fellowship of the Ring",
-      author: "J.R.R. Tolkien"
-    }
+        {
+            bookId: "3",
+            name: "The Fellowship of the Ring",
+            author: "J.R.R. Tolkien"
+        }
 
     actual = [
         book3Item,
         {
-          bookId: "4",
-          name: "Effective Java",
-          author: "Cannot Remember"
+            bookId: "4",
+            name: "Effective Java",
+            author: "Cannot Remember"
         },
         book3Item,
         book3Item
@@ -317,14 +317,14 @@ describe 'test top level array' do
     expected = [
         book3Item,
         {
-          bookId: "1",
-          name: "Harry Potter and the Sorcerer's Stone",
-          author: "J.K. Rowling"
+            bookId: "1",
+            name: "Harry Potter and the Sorcerer's Stone",
+            author: "J.K. Rowling"
         },
         {
-          bookId: "2",
-          name: "Eragon",
-          author: "Christopher Paolini"
+            bookId: "2",
+            name: "Eragon",
+            author: "Christopher Paolini"
         },
         book3Item
     ]
@@ -337,13 +337,13 @@ describe 'test top level array' do
     actualJson=actual.to_json;
 
     String expectedErrorMessage= "Expected: #{expectedJson}\n" +
-                                  makeGreen("  Actual: #{actualJson}") + "\n" +
-                                  "\nDiff:\n" +
-                                  "JSON path $.[] wrong number of:\n" +
-                                  "#{book3Item.to_json}\n" +
-                                  "in actual\n" +
-                                  "expected: 2\n" +
-                                  makeGreen("     got: 3") + "\n"
+        makeGreen("  Actual: #{actualJson}") + "\n" +
+        "\nDiff:\n" +
+        "JSON path $.[] wrong number of:\n" +
+        "#{book3Item.to_json}\n" +
+        "in actual\n" +
+        "expected: 2\n" +
+        makeGreen("     got: 3") + "\n"
 
     expect(customMatcher.failure_message).to eq(expectedErrorMessage)
 

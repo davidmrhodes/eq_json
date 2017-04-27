@@ -61,6 +61,9 @@ expect(expected).to eq_json(actual)
 # More Documentation
 [Keynote Slides](https://github.com/davidmrhodes/eq_json/blob/master/doc/eqJsonPresentation.key)
 
+If you don't have keynote here is
+[Quicktime Slide show](https://github.com/davidmrhodes/eq_json/blob/master/doc/eqJsonPresentation.m4v)
+
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/eq_json/fork )

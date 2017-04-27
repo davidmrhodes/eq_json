@@ -3,7 +3,7 @@ require 'colorizer'
 class EqJsonMessageGenerator
 
   def initialize(matcher)
-     @matcher = matcher
+    @matcher = matcher
     @colorizer = EqJsonColorizer.new
   end
 
@@ -16,7 +16,7 @@ class EqJsonMessageGenerator
       actualType = getJsonType(@matcher.currentActualObj)
       expectedType = getJsonType(@matcher.currentExpectedObj)
       currentJsonDiff = "\tExpected: #{@matcher.currentExpectedObj.to_json}\n" +
-                        @colorizer.green("\t  Actual: #{@matcher.currentActualObj.to_json}") + "\n"
+          @colorizer.green("\t  Actual: #{@matcher.currentActualObj.to_json}") + "\n"
     end
 
     jsonErrorInfo = "JSON path #{@matcher.jsonPath} expected #{expectedType} type but actual is #{actualType}\n"
@@ -25,8 +25,8 @@ class EqJsonMessageGenerator
     end
 
     return getExpectedActualJson() +"\n" +
-            "Diff:\n" +
-            "#{jsonErrorInfo}"
+        "Diff:\n" +
+        "#{jsonErrorInfo}"
   end
 
   def generateDifferentValueMessage()
@@ -37,27 +37,27 @@ class EqJsonMessageGenerator
     differ = RSpec::Support::Differ.new
 
     differ = RSpec::Support::Differ.new(
-          :object_preparer => lambda { |expected| RSpec::Matchers::Composable.surface_descriptions_in(expected) },
-          :color => RSpec::Matchers.configuration.color?
-      )
+        :object_preparer => lambda {|expected| RSpec::Matchers::Composable.surface_descriptions_in(expected)},
+        :color => RSpec::Matchers.configuration.color?
+    )
 
     @difference = differ.diff_as_object(@matcher.currentExpectedObj, @matcher.currentActualObj)
     # End unused code
 
     return getExpectedActualJson() + "\n" +
-           "Diff:\n" +
-           "JSON path #{@matcher.jsonPath}\n" +
-           "\texpected: \"#{@matcher.currentExpectedObj}\"\n" +
-           @colorizer.green("\t     got: \"#{@matcher.currentActualObj}\"")
+        "Diff:\n" +
+        "JSON path #{@matcher.jsonPath}\n" +
+        "\texpected: \"#{@matcher.currentExpectedObj}\"\n" +
+        @colorizer.green("\t     got: \"#{@matcher.currentActualObj}\"")
   end
 
   def generateDifferentKeyMessage()
     if @matcher.currentActualObj.nil?
-       objectsNotInExpected = getObjectsNotIn(@matcher.actual, @matcher.expected);
-       objectsNotInActual = getObjectsNotIn(@matcher.expected, @matcher.actual);
+      objectsNotInExpected = getObjectsNotIn(@matcher.actual, @matcher.expected);
+      objectsNotInActual = getObjectsNotIn(@matcher.expected, @matcher.actual);
     else
-       objectsNotInExpected = getObjectsNotIn(@matcher.currentActualObj, @matcher.currentExpectedObj);
-       objectsNotInActual = getObjectsNotIn(@matcher.currentExpectedObj, @matcher.currentActualObj);
+      objectsNotInExpected = getObjectsNotIn(@matcher.currentActualObj, @matcher.currentExpectedObj);
+      objectsNotInActual = getObjectsNotIn(@matcher.currentExpectedObj, @matcher.currentActualObj);
     end
 
     jsonErrorInfo = "JSON path #{@matcher.jsonPath}\n"
@@ -73,20 +73,20 @@ class EqJsonMessageGenerator
     differ = RSpec::Support::Differ.new
 
     differ = RSpec::Support::Differ.new(
-          :object_preparer => lambda { |expected| RSpec::Matchers::Composable.surface_descriptions_in(expected) },
-          :color => RSpec::Matchers.configuration.color?
+        :object_preparer => lambda {|expected| RSpec::Matchers::Composable.surface_descriptions_in(expected)},
+        :color => RSpec::Matchers.configuration.color?
     )
 
     if @matcher.currentActualObj.nil?
-       @difference = differ.diff(@matcher.expected, @matcher.actual)
+      @difference = differ.diff(@matcher.expected, @matcher.actual)
     else
-       @difference = differ.diff(@matcher.currentExpectedObj, @matcher.currentActualObj)
+      @difference = differ.diff(@matcher.currentExpectedObj, @matcher.currentActualObj)
     end
 
     return getExpectedActualJson() + "\n" +
-           "\nDiff:\n" +
-           jsonErrorInfo +
-           @difference
+        "\nDiff:\n" +
+        jsonErrorInfo +
+        @difference
   end
 
   def getExpectedActualJson
@@ -94,7 +94,7 @@ class EqJsonMessageGenerator
     actualJson=@matcher.actual.to_json;
 
     return "Expected: #{expectedJson}\n" +
-           @colorizer.green("  Actual: #{actualJson}")
+        @colorizer.green("  Actual: #{actualJson}")
   end
 
   def getObjectsNotIn(hash1, hash2)
@@ -128,11 +128,11 @@ class EqJsonMessageGenerator
     end
 
     jsonErrorInfo = "JSON path #{@matcher.jsonPath}[] expected length #{expectedLength} " +
-                    "actual length #{actualLength}\n"
+        "actual length #{actualLength}\n"
 
     return getExpectedActualJson() + "\n" +
-           "\nDiff:\n" +
-           jsonErrorInfo
+        "\nDiff:\n" +
+        jsonErrorInfo
   end
 
   def generateExpectedItemNotFoundInArray(expected_item, expected_count, actual_count)
@@ -146,14 +146,14 @@ class EqJsonMessageGenerator
 
     if actual_count == 0
       jsonErrorInfo = "JSON path #{@matcher.jsonPath}[] could not find:\n" +
-                      "#{expected_item.to_json}\n" +
-                      "in actual\n"
+          "#{expected_item.to_json}\n" +
+          "in actual\n"
     else
       jsonErrorInfo = "JSON path #{@matcher.jsonPath}[] wrong number of:\n" +
-                      "#{expected_item.to_json}\n" +
-                      "in actual\n" +
-                      "expected: #{expected_count}\n" +
-                      @colorizer.green("     got: #{actual_count}") + "\n"
+          "#{expected_item.to_json}\n" +
+          "in actual\n" +
+          "expected: #{expected_count}\n" +
+          @colorizer.green("     got: #{actual_count}") + "\n"
     end
 
     # unless objectsNotInExpected.empty?
@@ -165,21 +165,8 @@ class EqJsonMessageGenerator
     # end
 
     return getExpectedActualJson() + "\n" +
-           "\nDiff:\n" +
-           jsonErrorInfo
+        "\nDiff:\n" +
+        jsonErrorInfo
   end
-
-  # def getObjectsNotIn(array1, array2)
-  #   missing = {}
-  #   array1.each do |array1_item|
-  #     int item1Count = array1.count(array1_item)
-  #     int item2Count = array2.count(array1_item)
-  #
-  #     unless hash2.has_key?(hash1_key)
-  #       missing[hash1_key] = hash1_value
-  #     end
-  #   end
-  #   return missing
-  # end
 
 end

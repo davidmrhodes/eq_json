@@ -15,11 +15,9 @@ class EqualWithOutOrderJson
   end
 
   def matches?(expected)
-
     @expected = expected
 
     matchesObject?(@expected, @actual)
-
   end
 
   def failure_message
@@ -58,7 +56,6 @@ class EqualWithOutOrderJson
   end
 
   def arrays_match?(expectedObj, actualArray)
-
     unless actualArray.class == expectedObj.class
       @failureMessage = @messageGenerator.generateTypeMissMatchFailureMessage()
       return false;
@@ -71,18 +68,18 @@ class EqualWithOutOrderJson
 
     arrayUtil = EqualJsonArray.new
 
-    expectedObj.each do |expected_item|
+    expectedObj.each do |expectedItem|
 
       expectedCount = expectedObj.count do |item|
-          arrayUtil.itemEqual?(expected_item, item)
+        arrayUtil.itemEqual?(expectedItem, item)
       end
 
       actualCount = actualArray.count do |candidate|
-        arrayUtil.itemEqual?(expected_item, candidate)
+        arrayUtil.itemEqual?(expectedItem, candidate)
       end
 
       if expectedCount != actualCount
-        @failureMessage = @messageGenerator.generateExpectedItemNotFoundInArray(expected_item, expectedCount, actualCount)
+        @failureMessage = @messageGenerator.generateExpectedItemNotFoundInArray(expectedItem, expectedCount, actualCount)
         return false
       end
 
@@ -92,7 +89,6 @@ class EqualWithOutOrderJson
   end
 
   def hashes_match?(expectedObj, actualHash)
-
     unless actualHash.class == expectedObj.class
       @failureMessage = @messageGenerator.generateTypeMissMatchFailureMessage()
       return false;
@@ -103,9 +99,9 @@ class EqualWithOutOrderJson
       return false;
     end
 
-    expectedObj.each do |expected_key, expected_value|
-      @currentJsonKey = expected_key
-      actualValue = actualHash[expected_key]
+    expectedObj.each do |expectedKey, expectedValue|
+      @currentJsonKey = expectedKey
+      actualValue = actualHash[expectedKey]
       if actualValue.nil?
         @currentActualObj = actualHash
         @currentExpectedObj = expectedObj
@@ -113,15 +109,15 @@ class EqualWithOutOrderJson
         return false
       end
 
-      addKeyToPath(expected_key)
-      match = matchesObject?(expected_value, actualHash[expected_key])
-      removeKeyFromPath(expected_key)
+      addKeyToPath(expectedKey)
+      match = matchesObject?(expectedValue, actualHash[expectedKey])
+      removeKeyFromPath(expectedKey)
       if match == false
         return false;
       end
     end
 
-      return true
+    return true
 
   end
 
