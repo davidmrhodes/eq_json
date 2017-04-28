@@ -41,9 +41,9 @@ describe 'test nested objects not same type' do
 
     actualJson=actual.to_json
 
-    customMatcher=EqualWithOutOrderJson.new(actual)
+    customMatcher=EqualWithOutOrderJson.new(expected)
 
-    expect(customMatcher.matches?(expected)).to eq(false)
+    expect(customMatcher.matches?(actual)).to eq(false)
 
     String expectedErrorMessage= "Expected: #{expectedJson}\n" +
         makeGreen("  Actual: #{actualJson}") + "\n" +
@@ -151,9 +151,9 @@ describe 'test nested level json objects' do
         }
     }
 
-    customMatcher=EqualWithOutOrderJson.new(actual)
+    customMatcher=EqualWithOutOrderJson.new(expected)
 
-    expect(customMatcher.matches?(expected)).to eq(false)
+    expect(customMatcher.matches?(actual)).to eq(false)
 
     expectedJson=expected.to_json;
     actualJson=actual.to_json;
@@ -200,9 +200,9 @@ describe 'test nested level json objects' do
         }
     }
 
-    customMatcher=EqualWithOutOrderJson.new(actual)
+    customMatcher=EqualWithOutOrderJson.new(expected)
 
-    expect(customMatcher.matches?(expected)).to eq(false)
+    expect(customMatcher.matches?(actual)).to eq(false)
 
     expectedJson=expected.to_json;
     actualJson=actual.to_json;
@@ -248,9 +248,9 @@ describe 'test nested level json objects' do
         name: 'Harry Potter and the Sorcerer\'s Stone'
     }
 
-    customMatcher=EqualWithOutOrderJson.new(actual)
+    customMatcher=EqualWithOutOrderJson.new(expected)
 
-    expect(customMatcher.matches?(expected)).to eq(false)
+    expect(customMatcher.matches?(actual)).to eq(false)
 
     expectedJson=expected.to_json;
     actualJson=actual.to_json;
@@ -298,9 +298,9 @@ describe 'test nested level json objects' do
         }
     }
 
-    customMatcher=EqualWithOutOrderJson.new(actual)
+    customMatcher=EqualWithOutOrderJson.new(expected)
 
-    expect(customMatcher.matches?(expected)).to eq(false)
+    expect(customMatcher.matches?(actual)).to eq(false)
 
     expectedJson=expected.to_json;
     actualJson=actual.to_json;
@@ -349,9 +349,9 @@ describe 'test nested level json objects' do
         }
     }
 
-    customMatcher=EqualWithOutOrderJson.new(actual)
+    customMatcher=EqualWithOutOrderJson.new(expected)
 
-    expect(customMatcher.matches?(expected)).to eq(false)
+    expect(customMatcher.matches?(actual)).to eq(false)
 
     expectedJson=expected.to_json;
     actualJson=actual.to_json;

@@ -18,9 +18,9 @@ describe 'test objects not same type' do
 
     actualJson=actual.to_json
 
-    customMatcher=EqualWithOutOrderJson.new(actual)
+    customMatcher=EqualWithOutOrderJson.new(expected)
 
-    expect(customMatcher.matches?(expected)).to eq(false)
+    expect(customMatcher.matches?(actual)).to eq(false)
 
     String expectedErrorMessage= "Expected: #{expectedJson}\n" +
         makeGreen("  Actual: #{actualJson}") + "\n" +
@@ -29,7 +29,7 @@ describe 'test objects not same type' do
 
     expect(customMatcher.failure_message).to eq(expectedErrorMessage)
 
-    expect(expected).not_to eq_json(actual)
+    expect(actual).not_to eq_json(expected)
   end
 
 end
@@ -47,7 +47,7 @@ describe 'test single level json objects' do
         author: 'J.K. Rowling'
     }
 
-    expect(expected).to eq_json(actual)
+    expect(actual).to eq_json(expected)
   end
 
   it 'test that objects equal out of order' do
@@ -61,7 +61,7 @@ describe 'test single level json objects' do
         name: 'Harry Potter and the Sorcerer\'s Stone'
     }
 
-    expect(expected).to eq_json(actual)
+    expect(actual).to eq_json(expected)
   end
 
   it 'actual missing object' do
@@ -75,9 +75,9 @@ describe 'test single level json objects' do
         author: 'J.K. Rowling'
     }
 
-    customMatcher=EqualWithOutOrderJson.new(actual)
+    customMatcher=EqualWithOutOrderJson.new(expected)
 
-    expect(customMatcher.matches?(expected)).to eq(false)
+    expect(customMatcher.matches?(actual)).to eq(false)
 
     expectedJson=expected.to_json;
     actualJson=actual.to_json;
@@ -93,7 +93,7 @@ describe 'test single level json objects' do
 
     expect(customMatcher.failure_message).to eq(expectedErrorMessage)
 
-    expect(expected).not_to eq_json(actual)
+    expect(actual).not_to eq_json(expected)
   end
 
   it 'expected missing object' do
@@ -107,9 +107,9 @@ describe 'test single level json objects' do
         name: 'Harry Potter and the Sorcerer\'s Stone',
     }
 
-    customMatcher=EqualWithOutOrderJson.new(actual)
+    customMatcher=EqualWithOutOrderJson.new(expected)
 
-    expect(customMatcher.matches?(expected)).to eq(false)
+    expect(customMatcher.matches?(actual)).to eq(false)
 
     expectedJson=expected.to_json;
     actualJson=actual.to_json;
@@ -125,7 +125,7 @@ describe 'test single level json objects' do
 
     expect(customMatcher.failure_message).to eq(expectedErrorMessage)
 
-    expect(expected).not_to eq_json(actual)
+    expect(actual).not_to eq_json(expected)
   end
 
   it 'expected missing mutiple objects' do
@@ -140,9 +140,9 @@ describe 'test single level json objects' do
         name: 'Harry Potter and the Sorcerer\'s Stone',
     }
 
-    customMatcher=EqualWithOutOrderJson.new(actual)
+    customMatcher=EqualWithOutOrderJson.new(expected)
 
-    expect(customMatcher.matches?(expected)).to eq(false)
+    expect(customMatcher.matches?(actual)).to eq(false)
 
     expectedJson=expected.to_json;
     actualJson=actual.to_json;
@@ -159,7 +159,7 @@ describe 'test single level json objects' do
 
     expect(customMatcher.failure_message).to eq(expectedErrorMessage)
 
-    expect(expected).not_to eq_json(actual)
+    expect(actual).not_to eq_json(expected)
   end
 
   it 'expected and actual both have missing objects' do
@@ -175,9 +175,9 @@ describe 'test single level json objects' do
     }
 
 
-    customMatcher=EqualWithOutOrderJson.new(actual)
+    customMatcher=EqualWithOutOrderJson.new(expected)
 
-    expect(customMatcher.matches?(expected)).to eq(false)
+    expect(customMatcher.matches?(actual)).to eq(false)
 
     expectedJson=expected.to_json;
     actualJson=actual.to_json;
@@ -195,7 +195,7 @@ describe 'test single level json objects' do
 
     expect(customMatcher.failure_message).to eq(expectedErrorMessage)
 
-    expect(expected).not_to eq_json(actual)
+    expect(actual).not_to eq_json(expected)
   end
 
   it 'expected and actual have different values for key' do
@@ -210,9 +210,9 @@ describe 'test single level json objects' do
         author: 'J.K. Rowling'
     }
 
-    customMatcher=EqualWithOutOrderJson.new(actual)
+    customMatcher=EqualWithOutOrderJson.new(expected)
 
-    expect(customMatcher.matches?(expected)).to eq(false)
+    expect(customMatcher.matches?(actual)).to eq(false)
 
     expectedJson=expected.to_json;
     actualJson=actual.to_json;
@@ -226,6 +226,6 @@ describe 'test single level json objects' do
 
     expect(customMatcher.failure_message).to eq(expectedErrorMessage)
 
-    expect(expected).not_to eq_json(actual)
+    expect(actual).not_to eq_json(expected)
   end
 end

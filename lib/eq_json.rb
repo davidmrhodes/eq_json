@@ -7,15 +7,15 @@ class EqualWithOutOrderJson
   attr_accessor :actual, :expected, :jsonPath, :jsonPathRoot, :currentActualObj,
                 :currentExpectedObj, :currentJsonKey
 
-  def initialize(actual)
-    @actual = actual
+  def initialize(expected)
+    @expected = expected
     @jsonPathRoot = "$."
     @jsonPath = @jsonPathRoot
     @messageGenerator = EqJsonMessageGenerator.new(self)
   end
 
-  def matches?(expected)
-    @expected = expected
+  def matches?(actual)
+    @actual = actual
 
     matchesObject?(@expected, @actual)
   end

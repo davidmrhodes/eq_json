@@ -69,9 +69,9 @@ describe 'test nested array not same' do
         url: "www.amazon.com"
     }
 
-    customMatcher=EqualWithOutOrderJson.new(actual)
+    customMatcher=EqualWithOutOrderJson.new(expected)
 
-    expect(customMatcher.matches?(expected)).to eq(false)
+    expect(customMatcher.matches?(actual)).to eq(false)
 
     expectedJson=expected.to_json;
     actualJson=actual.to_json;
@@ -155,9 +155,9 @@ describe 'test nested array not same' do
         url: "www.amazon.com"
     }
 
-    customMatcher=EqualWithOutOrderJson.new(actual)
+    customMatcher=EqualWithOutOrderJson.new(expected)
 
-    expect(customMatcher.matches?(expected)).to eq(false)
+    expect(customMatcher.matches?(actual)).to eq(false)
 
     expectedJson=expected.to_json;
     actualJson=actual.to_json;
@@ -398,9 +398,9 @@ describe 'test nested array' do
         url: "www.amazon.com"
     }
 
-    customMatcher=EqualWithOutOrderJson.new(actual)
+    customMatcher=EqualWithOutOrderJson.new(expected)
 
-    expect(customMatcher.matches?(expected)).to eq(false)
+    expect(customMatcher.matches?(actual)).to eq(false)
 
     expectedJson=expected.to_json;
     actualJson=actual.to_json;
@@ -492,9 +492,9 @@ describe 'test nested array' do
         url: "www.amazon.com"
     }
 
-    customMatcher=EqualWithOutOrderJson.new(actual)
+    customMatcher=EqualWithOutOrderJson.new(expected)
 
-    expect(customMatcher.matches?(expected)).to eq(false)
+    expect(customMatcher.matches?(actual)).to eq(false)
 
     expectedJson=expected.to_json;
     actualJson=actual.to_json;
@@ -580,9 +580,9 @@ describe 'test nested array' do
         url: "www.amazon.com"
     }
 
-    customMatcher=EqualWithOutOrderJson.new(actual)
+    customMatcher=EqualWithOutOrderJson.new(expected)
 
-    expect(customMatcher.matches?(expected)).to eq(false)
+    expect(customMatcher.matches?(actual)).to eq(false)
 
     expectedJson=expected.to_json;
     actualJson=actual.to_json;
