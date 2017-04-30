@@ -1,6 +1,7 @@
 require 'pp'
 require 'message_generator'
 require 'eq_json_array'
+require 'debug_dumper'
 
 class EqualWithOutOrderJson
 
@@ -21,6 +22,12 @@ class EqualWithOutOrderJson
   end
 
   def failure_message
+    if RSpec.configuration.methods.include? :json_debug_config
+      if RSpec.configuration.json_debug_config?
+        debugDumper = EqJsonDebugDumper.new(self)
+        debugDumper.dump()
+      end
+    end
     return @failureMessage
   end
 

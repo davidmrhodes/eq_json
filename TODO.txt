@@ -1,31 +1,16 @@
-1) Implement array equals
-    a) make sure to test that arrays with same objects but different number of
-    same objects is not equal.  Must test with same number of total objects in
-    array
 
-2) Document that did not use matcher DSL.  Easier to test if just used class.
-
-3)  Look to see on diff what should get actual is green or red?
+1)  Look to see on diff what should get actual is green or red?
     Answer:  expected is - in red
 
-4) If object is a string and is multi line use differ in failure_message
+2) If object is a string and is multi line use differ in failure_message
 
-5) test for json object combinations of (do for actual also)
+3) test for json object combinations of (do for actual also)
        first key in map not in expected
        middle key in map not in expected
        last key in map not in expected
 
-6) Do I need to check expected and actual are valid josn?
+4) Do I need to check expected and actual are valid josn?
 
 
-7) Add comparable function with an selection criteria for and id to compare arrays
+5) Add comparable function with an selection criteria for and id to compare arrays
 
-8) If objects are large write them to a files in temp
-Could be done via configuration to find if configuration exists:
-
-if RSpec.configuration.methods.include? :json_debug_config
-   puts "json_debug_config #{RSpec.configuration.json_debug_config}"
-end
-
-Then put this in spec_helper:
-c.json_debug_config=true

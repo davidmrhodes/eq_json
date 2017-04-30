@@ -15,6 +15,7 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
 
   s.add_runtime_dependency 'rspec', '~> 3.0'
+  s.add_runtime_dependency 'json', '~> 1.7'
   s.add_development_dependency 'bundler', '~> 1.7'
   s.add_development_dependency 'rake', '~> 10.0'
 end
