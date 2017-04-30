@@ -56,7 +56,7 @@ expected = {
   }
 }
 
-expect(expected).to eq_json(actual)
+expect(actual).to eq_json(expected)
 ```
 # More Documentation
 [Keynote Slides](https://github.com/davidmrhodes/eq_json/blob/master/doc/eqJsonPresentation.key)
