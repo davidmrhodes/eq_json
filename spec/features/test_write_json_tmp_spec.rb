@@ -85,7 +85,7 @@ describe 'test debug files' do
         url: "www.amazon.com"
     }
 
-    @customMatcher=EqualWithOutOrderJson.new(@expected)
+    @customMatcher=EqualJson.new(@expected)
 
     expect(@customMatcher.matches?(@actual)).to eq(false)
 

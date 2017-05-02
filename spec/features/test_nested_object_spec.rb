@@ -41,7 +41,7 @@ describe 'test nested objects not same type' do
 
     actualJson=actual.to_json
 
-    customMatcher=EqualWithOutOrderJson.new(expected)
+    customMatcher=EqualJson.new(expected)
 
     expect(customMatcher.matches?(actual)).to eq(false)
 
@@ -151,7 +151,7 @@ describe 'test nested level json objects' do
         }
     }
 
-    customMatcher=EqualWithOutOrderJson.new(expected)
+    customMatcher=EqualJson.new(expected)
 
     expect(customMatcher.matches?(actual)).to eq(false)
 
@@ -200,7 +200,7 @@ describe 'test nested level json objects' do
         }
     }
 
-    customMatcher=EqualWithOutOrderJson.new(expected)
+    customMatcher=EqualJson.new(expected)
 
     expect(customMatcher.matches?(actual)).to eq(false)
 
@@ -248,7 +248,7 @@ describe 'test nested level json objects' do
         name: 'Harry Potter and the Sorcerer\'s Stone'
     }
 
-    customMatcher=EqualWithOutOrderJson.new(expected)
+    customMatcher=EqualJson.new(expected)
 
     expect(customMatcher.matches?(actual)).to eq(false)
 
@@ -298,7 +298,7 @@ describe 'test nested level json objects' do
         }
     }
 
-    customMatcher=EqualWithOutOrderJson.new(expected)
+    customMatcher=EqualJson.new(expected)
 
     expect(customMatcher.matches?(actual)).to eq(false)
 
@@ -349,7 +349,7 @@ describe 'test nested level json objects' do
         }
     }
 
-    customMatcher=EqualWithOutOrderJson.new(expected)
+    customMatcher=EqualJson.new(expected)
 
     expect(customMatcher.matches?(actual)).to eq(false)
 

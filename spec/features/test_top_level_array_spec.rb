@@ -36,7 +36,7 @@ describe 'test top level array not same size' do
         }
     ]
 
-    customMatcher=EqualWithOutOrderJson.new(expected)
+    customMatcher=EqualJson.new(expected)
 
     expect(customMatcher.matches?(actual)).to eq(false)
 
@@ -86,7 +86,7 @@ describe 'test top level array not same size' do
         }
     }
 
-    customMatcher=EqualWithOutOrderJson.new(expected)
+    customMatcher=EqualJson.new(expected)
 
     expect(customMatcher.matches?(actual)).to eq(false)
 
@@ -210,7 +210,7 @@ describe 'test top level array' do
         book3Item
     ]
 
-    customMatcher=EqualWithOutOrderJson.new(expected)
+    customMatcher=EqualJson.new(expected)
 
     expect(customMatcher.matches?(actual)).to eq(false)
 
@@ -273,7 +273,7 @@ describe 'test top level array' do
         book3Item
     ]
 
-    customMatcher=EqualWithOutOrderJson.new(expected)
+    customMatcher=EqualJson.new(expected)
 
     expect(customMatcher.matches?(actual)).to eq(false)
 
@@ -329,7 +329,7 @@ describe 'test top level array' do
         book3Item
     ]
 
-    customMatcher=EqualWithOutOrderJson.new(expected)
+    customMatcher=EqualJson.new(expected)
 
     expect(customMatcher.matches?(actual)).to eq(false)
 

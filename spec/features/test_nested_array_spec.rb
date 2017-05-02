@@ -69,7 +69,7 @@ describe 'test nested array not same' do
         url: "www.amazon.com"
     }
 
-    customMatcher=EqualWithOutOrderJson.new(expected)
+    customMatcher=EqualJson.new(expected)
 
     expect(customMatcher.matches?(actual)).to eq(false)
 
@@ -155,7 +155,7 @@ describe 'test nested array not same' do
         url: "www.amazon.com"
     }
 
-    customMatcher=EqualWithOutOrderJson.new(expected)
+    customMatcher=EqualJson.new(expected)
 
     expect(customMatcher.matches?(actual)).to eq(false)
 
@@ -398,7 +398,7 @@ describe 'test nested array' do
         url: "www.amazon.com"
     }
 
-    customMatcher=EqualWithOutOrderJson.new(expected)
+    customMatcher=EqualJson.new(expected)
 
     expect(customMatcher.matches?(actual)).to eq(false)
 
@@ -492,7 +492,7 @@ describe 'test nested array' do
         url: "www.amazon.com"
     }
 
-    customMatcher=EqualWithOutOrderJson.new(expected)
+    customMatcher=EqualJson.new(expected)
 
     expect(customMatcher.matches?(actual)).to eq(false)
 
@@ -580,7 +580,7 @@ describe 'test nested array' do
         url: "www.amazon.com"
     }
 
-    customMatcher=EqualWithOutOrderJson.new(expected)
+    customMatcher=EqualJson.new(expected)
 
     expect(customMatcher.matches?(actual)).to eq(false)
 

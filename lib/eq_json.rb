@@ -3,7 +3,7 @@ require 'message_generator'
 require 'eq_json_array'
 require 'debug_dumper'
 
-class EqualWithOutOrderJson
+class EqualJson
 
   attr_accessor :actual, :expected, :jsonPath, :jsonPathRoot, :currentActualObj,
                 :currentExpectedObj, :currentJsonKey
@@ -145,5 +145,7 @@ class EqualWithOutOrderJson
 end
 
 def eq_json(*args)
-  EqualWithOutOrderJson.new(*args)
+  EqualJson.new(*args)
 end
+
+
