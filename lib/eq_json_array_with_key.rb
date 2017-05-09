@@ -2,23 +2,35 @@ require 'pp'
 require 'message_generator'
 require 'debug_dumper'
 require 'eq_json'
+require 'array_with_key_message_gen'
 
 class EqualJsonArrayWithKey
+
+  attr_accessor :actual, :expected, :key
 
   def initialize(expected, key)
     @expected = expected
     @key = key
-
+    @messageGenerator = ArrayWithKeyMessageGen.new(self)
   end
 
   def matches?(actual)
     @actual = actual
 
+    unless actual.length == expected.length
+      @failureMessage = @messageGenerator.generateDifferentSizeArrays()
+      return false
+    end
+
     @expected.each() do |expectedItem|
       actualItem = actual.find {|item| item[@key] == expectedItem[@key]}
+      if actualItem.nil?
+        @failureMessage = @messageGenerator.generateExpectedNotInActual(expectedItem)
+        return false;
+      end
       @eqJsonMatcher=EqualJson.new(expectedItem)
       if !@eqJsonMatcher.matches?(actualItem)
-        generateFailureMessage(expectedItem)
+        @failureMessage = @messageGenerator.generateFailureMessage(expectedItem, @eqJsonMatcher.failure_message)
         return false;
       end
     end
@@ -29,14 +41,6 @@ class EqualJsonArrayWithKey
   def failure_message
     return @failureMessage
   end
-
-  private
-
-  def generateFailureMessage(expectedItem)
-    @failureMessage="#{@key} #{expectedItem[@key]}\n" +
-        @eqJsonMatcher.failure_message
-  end
-
 
 end
 

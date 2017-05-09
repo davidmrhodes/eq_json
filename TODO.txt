@@ -14,3 +14,6 @@
 
 5) Add comparable function with an selection criteria for and id to compare arrays
 
+6) Had suggestion to make color brighter red
+
+7) Had suggestion to print out sorted json in debug mode.
