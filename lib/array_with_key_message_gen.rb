@@ -28,7 +28,7 @@ class ArrayWithKeyMessageGen
     end
 
     unless objectsNotInActual.empty?
-      jsonErrorInfo << "actual does not contain #{objectsNotInActual}\n"
+      jsonErrorInfo << "actual does not contain #{@matcher.key}s #{objectsNotInActual}\n"
     end
 
     return jsonErrorInfo
