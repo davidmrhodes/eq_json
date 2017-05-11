@@ -98,7 +98,84 @@ describe 'test item miss match' do
 
   # TODO add test for key not in expected.  Strange case really user error
 
-  # TODO write test case if key is not a symbol.
+  it 'test exception raised when key not a symbol' do
+    actual = {
+        bookSeller: "amazon",
+        bookWholeSellers: {
+            publisherInfo: {
+                name: "ACME Publisher Inc.",
+                publishDate: {
+                    month: 3,
+                    day: 23,
+                    year: 2015
+                },
+                products: {
+                    books: [
+                        {
+                            bookId: "1",
+                            name: "Harry Potter and the Sorcerer's Stone",
+                            author: "J.K. Rowling"
+                        },
+                        {
+                            bookId: "2",
+                            name: "Eragon",
+                            author: "Christopher Paolini",
+                            isbn: 1234
+                        },
+                        {
+                            bookId: "3",
+                            name: "The Fellowship of the Ring",
+                            author: "J.R.R. Tolkien"
+                        }
+                    ]
+                }
+            }
+        },
+        url: "www.amazon.com"
+
+    }
+    actualArray = actual[:bookWholeSellers][:publisherInfo][:products][:books]
+
+    expected = {
+        bookSeller: "amazon",
+        bookWholeSellers: {
+            publisherInfo: {
+                name: "ACME Publisher Inc.",
+                publishDate: {
+                    month: 3,
+                    day: 23,
+                    year: 2015
+                },
+                products: {
+                    books: [
+                        {
+                            bookId: "1",
+                            name: "Harry Potter and the Sorcerer's Stone",
+                            author: "J.K. Rowling"
+                        },
+                        {
+                            bookId: "2",
+                            name: "Eragon",
+                            author: "Christopher Paolini"
+                        },
+                        {
+                            bookId: "3",
+                            name: "The Fellowship of the Ring",
+                            author: "J.R.R. Tolkien"
+
+                        }
+                    ]
+                }
+            }
+        },
+        url: "www.amazon.com"
+    }
+
+    expectedArray = expected[:bookWholeSellers][:publisherInfo][:products][:books]
+
+    expect{EqualJsonArrayWithKey.new(expectedArray, "bookId")}.to raise_error(RuntimeError, 'Key should be a symbol');
+
+  end
 
   it 'actual contains more items than expected' do
 

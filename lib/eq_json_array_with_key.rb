@@ -9,6 +9,9 @@ class EqualJsonArrayWithKey
   attr_accessor :actual, :expected, :key
 
   def initialize(expected, key)
+    unless key.is_a? Symbol
+      raise "Key should be a symbol"
+    end
     @expected = expected
     @key = key
     @messageGenerator = ArrayWithKeyMessageGen.new(self)
