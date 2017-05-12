@@ -96,6 +96,50 @@ describe 'test item miss match' do
 
   end
 
+  it 'actual and expected equal' do
+
+    actualArray = [
+        {
+            bookId: "1",
+            name: "Harry Potter and the Sorcerer's Stone",
+            author: "J.K. Rowling"
+        },
+        {
+            bookId: "2",
+            name: "Eragon",
+            author: "Christopher Paolini",
+        },
+        {
+            bookId: "3",
+            name: "The Fellowship of the Ring",
+            author: "J.R.R. Tolkien"
+
+        }
+    ]
+
+    expectedArray = [
+        {
+            bookId: "3",
+            name: "The Fellowship of the Ring",
+            author: "J.R.R. Tolkien"
+
+        },
+        {
+            bookId: "1",
+            name: "Harry Potter and the Sorcerer's Stone",
+            author: "J.K. Rowling"
+        },
+        {
+            bookId: "2",
+            name: "Eragon",
+            author: "Christopher Paolini"
+        }
+    ]
+
+    expect(actualArray).to eq_json_array_with_key(expectedArray, :bookId)
+
+  end
+
   it 'test excepted dpes not have key' do
     actual = {
         bookSeller: "amazon",
@@ -264,7 +308,7 @@ describe 'test item miss match' do
 
     expectedArray = expected[:bookWholeSellers][:publisherInfo][:products][:books]
 
-    expect{EqualJsonArrayWithKey.new(expectedArray, "bookId")}.to raise_error(RuntimeError, 'Key should be a symbol');
+    expect {EqualJsonArrayWithKey.new(expectedArray, "bookId")}.to raise_error(RuntimeError, 'Key should be a symbol');
 
   end
 

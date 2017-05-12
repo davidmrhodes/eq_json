@@ -58,6 +58,56 @@ expected = {
 
 expect(actual).to eq_json(expected)
 ```
+
+There is also a special json array matcher.  This is used to match json arrays which are arrays of JSON
+objects which have a key.  The key is used to compare objects in the array.  The matcher looks for items in
+the actual using the key.  It then compares the expected item and actual item that it found via the key.
+  The key is passed in to the matcher with the expected value.  In the example
+below a JSON array of book objects is being compared.  Each book has a bookId which is used by the matcher to
+do the compare of expected and actual
+```ruby
+  actualArray = [
+        {
+            bookId: "1",
+            name: "Harry Potter and the Sorcerer's Stone",
+            author: "J.K. Rowling"
+        },
+        {
+            bookId: "2",
+            name: "Eragon",
+            author: "Christopher Paolini",
+        },
+        {
+            bookId: "3",
+            name: "The Fellowship of the Ring",
+            author: "J.R.R. Tolkien"
+
+        }
+    ]
+
+    expectedArray = [
+        {
+            bookId: "3",
+            name: "The Fellowship of the Ring",
+            author: "J.R.R. Tolkien"
+
+        },
+        {
+            bookId: "1",
+            name: "Harry Potter and the Sorcerer's Stone",
+            author: "J.K. Rowling"
+        },
+        {
+            bookId: "2",
+            name: "Eragon",
+            author: "Christopher Paolini"
+        }
+    ]
+
+    expect(actualArray).to eq_json_array_with_key(expectedArray, :bookId)
+
+```
+
 # More Documentation
 [Keynote Slides](https://github.com/davidmrhodes/eq_json/blob/master/doc/eqJsonPresentation.key)
 
