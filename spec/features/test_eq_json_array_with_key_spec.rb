@@ -96,7 +96,98 @@ describe 'test item miss match' do
 
   end
 
-  # TODO add test for key not in expected.  Strange case really user error
+  it 'test excepted dpes not have key' do
+    actual = {
+        bookSeller: "amazon",
+        bookWholeSellers: {
+            publisherInfo: {
+                name: "ACME Publisher Inc.",
+                publishDate: {
+                    month: 3,
+                    day: 23,
+                    year: 2015
+                },
+                products: {
+                    books: [
+                        {
+                            bookId: "1",
+                            name: "Harry Potter and the Sorcerer's Stone",
+                            author: "J.K. Rowling"
+                        },
+                        {
+                            bookId: "2",
+                            name: "Eragon",
+                            author: "Christopher Paolini",
+                            isbn: 1234
+                        },
+                        {
+                            bookId: "3",
+                            name: "The Fellowship of the Ring",
+                            author: "J.R.R. Tolkien"
+                        }
+                    ]
+                }
+            }
+        },
+        url: "www.amazon.com"
+
+    }
+    actualArray = actual[:bookWholeSellers][:publisherInfo][:products][:books]
+
+    book1 = {
+        bookIdentity: "1",
+        name: "Harry Potter and the Sorcerer's Stone",
+        author: "J.K. Rowling"
+    }
+
+    expected = {
+        bookSeller: "amazon",
+        bookWholeSellers: {
+            publisherInfo: {
+                name: "ACME Publisher Inc.",
+                publishDate: {
+                    month: 3,
+                    day: 23,
+                    year: 2015
+                },
+                products: {
+                    books: [
+                        book1,
+                        {
+                            bookIdentity: "2",
+                            name: "Eragon",
+                            author: "Christopher Paolini"
+                        },
+                        {
+                            bookIdentity: "3",
+                            name: "The Fellowship of the Ring",
+                            author: "J.R.R. Tolkien"
+
+                        }
+                    ]
+                }
+            }
+        },
+        url: "www.amazon.com"
+    }
+
+    expectedArray = expected[:bookWholeSellers][:publisherInfo][:products][:books]
+
+    customMatcher=EqualJsonArrayWithKey.new(expectedArray, :bookId)
+
+    expect(customMatcher.matches?(actualArray)).to eq(false)
+
+    expectedJson=expected.to_json;
+    actualJson=actual.to_json;
+
+    String expectedErrorMessage= "Tester error expected item does not have key bookId.\n" +
+        "Expected item: #{book1.to_json}\n"
+
+    expect(customMatcher.failure_message).to eq(expectedErrorMessage)
+
+    expect(actualArray).not_to eq_json_array_with_key(expectedArray, :bookId)
+
+  end
 
   it 'test exception raised when key not a symbol' do
     actual = {

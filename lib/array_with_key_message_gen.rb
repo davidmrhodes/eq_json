@@ -17,6 +17,12 @@ class ArrayWithKeyMessageGen
         "Expected: #{expectedItem.to_json}\n"
   end
 
+  def generateExpectedItemMissingKey(expectedItem)
+    return "Tester error expected item does not have key #{@matcher.key}.\n" +
+        "Expected item: #{expectedItem.to_json}\n"
+  end
+
+
   def generateDifferentSizeArrays()
     objectsNotInExpected = getObjectsNotIn(@matcher.actual, @matcher.expected);
     objectsNotInActual = getObjectsNotIn(@matcher.expected, @matcher.actual);
