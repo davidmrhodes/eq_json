@@ -1,8 +1,8 @@
 Gem::Specification.new do |s|
   s.name        = 'eq_json'
-  s.version     = '1.0.2'
-  s.date        = '2016-02-29'
-  s.summary     = 'RSpec equality matcher that to compare JSON'
+  s.version     = '2.0.0'
+  s.date        = '2017-05-12'
+  s.summary     = 'RSpec equality matcher that compares JSON'
   s.description = 'RSpec equality matcher that deeply compares JSON. Examples at github.com/davidmrhodes/eq_json'
    s.authors     = ['David M. Rhodes']
   s.email       = 'barnaby71@gmail.com'
