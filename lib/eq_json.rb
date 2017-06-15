@@ -109,7 +109,7 @@ class EqualJson
     expectedObj.each do |expectedKey, expectedValue|
       @currentJsonKey = expectedKey
       actualValue = actualHash[expectedKey]
-      if actualValue.nil?
+      unless actualHash.has_key? expectedKey
         @currentActualObj = actualHash
         @currentExpectedObj = expectedObj
         @failureMessage = @messageGenerator.generateDifferentKeyMessage()

@@ -26,9 +26,7 @@ class EqualJsonArrayWithKey
     end
 
     @expected.each() do |expectedItem|
-      puts "expectedItem[key] #{expectedItem[@key]}"
       if expectedItem[@key].nil?
-        puts "got here dmr"
         @failureMessage = @messageGenerator.generateExpectedItemMissingKey(expectedItem)
         return false
       end
